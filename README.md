@@ -5,13 +5,13 @@ MAPQUITO: A DENGUE VIRUS DYNAMIC HEATMAP WITH PRESCRIPTIVE ANALYTICS
 Specifically, this study seeks to answer the following:
 1. Develop a model to prescribe mitigating measures based from the number of cases and existing measures of the City Health Office.
 2. Develop a dengue heatmap system that displays a visualization of dengue virus cases and integrating the model
-3.	Determine the impression of the user on the developed heatmap using the User Experience Questionnaire.
+3. Determine the impression of the user on the developed heatmap using the User Experience Questionnaire.
 	a. Attractiveness
 	b. Perspicuity
 	c. Efficiency
 	d. Dependability
 	e. Stimulation
-	f .Novelty
+	f. Novelty
 
 ## Request Payload
 1. Insert Data (postName):
