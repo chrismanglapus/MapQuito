@@ -1,0 +1,917 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+}
+
+.top-panel {
+    background-color: #f5f5f5;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    z-index: 3;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    /* Adjust the values as needed */
+}
+
+.logo-title img {
+    height: 70px;
+    position: fixed;
+    left: 20px;
+    top: -6px;
+}
+
+.logo-title h1 a {
+    position: fixed;
+    left: 90px;
+    top: 1px;
+    font-size: 50px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-variant: small-caps;
+    font-weight: bold;
+}
+
+.left-panel {
+    background-color: #ffffff;
+    padding: 10px;
+    height: 100vh;
+    width: 200px;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    z-index: 1;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    /* Adjust the values as needed */
+}
+
+.menu-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #4a6eda;
+    position: relative;
+    top: 10px;
+}
+
+.login-button a,
+.dropbtn {
+    font-size: 14px;
+    text-align: center;
+    display: block;
+    padding: 10px;
+    /* Adjust the padding as needed */
+    margin-bottom: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.login-button a,
+.dropbtn {
+    padding: 12px 20px;
+}
+
+/* MENU BUTTON*/
+.menu-button {
+    font-weight: bolder;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    color: rgb(9, 39, 70);
+    /* Dodger blue text color */
+    padding: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    /* Include border-color in the transition */
+    margin-bottom: 10px;
+    position: relative;
+    top: 10px;
+    /* Adjust the margin-bottom as needed */
+}
+
+.menu-button span {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.menu-button img {
+    width: 28px;
+    height: 28px;
+    margin-right: 5px;
+}
+
+.menu-button:hover {
+    background-color: #e0f3ff;
+    /* Dodger blue fill on hover */
+    color: #4a6eda;
+    border-color: #ffffff;
+    /* White stroke on hover */
+    border-radius: 8px;
+    /* Rounded corners on hover */
+}
+
+.login-button a {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    position: fixed;
+    right: 20px;
+    top: 8px;
+    font-weight: bolder;
+}
+
+.login-button a:hover {
+    transform: scale(1.1);
+    border: 3px solid #12354d;
+    color: #3498db;
+    background-color: #fff;
+    font-weight: bolder;
+}
+
+.footer {
+    background-color: #dcdcdc;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    box-shadow: 0px -8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.footer a {
+    position: relative;
+    top: 4px;
+    bottom: 0px;
+}
+
+.footer b {
+    color: #2980b9;
+    font-weight: bold;
+
+}
+
+.footer c {
+    color: chocolate;
+    font-weight: bold;
+
+}
+
+.footer d {
+    color: #00b4ba;
+    font-weight: bold;
+}
+
+/* LOGIN.PHP specific styles */
+body.login-page {
+    background-image: url('/MapQuito/assets/BG3.jpg');
+    backdrop-filter: blur(5px);
+    /* Adjust the blur radius */
+    background-color: #ffffff;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    height: 93vh;
+    width: 32vh;
+}
+
+.login-container-fields {
+    position: relative;
+    top: 10%;
+}
+
+.login-container h1 {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 12vw;
+    font-size: 2vw;
+    font-weight: bold;
+    text-align: center;
+}
+
+.login-container img {
+    position: relative;
+    max-width: 100%;
+    margin-bottom: 0;
+}
+
+.input-fields {
+    text-align: left;
+    font-size: 0.9rem;
+    margin-top: 20px;
+}
+
+.input-fields .inputs {
+    position: relative;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.login-submit {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 12px 4%;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 100%;
+    transition: background-color 0.3s, color 0.3s;
+    border: 3px solid transparent;
+}
+.login-submit:hover {
+    font-weight: bold;
+    background-color: #fff;
+    color: #45a049;
+    border: 3px solid #45a049;
+}
+
+.redirect-button {
+    position: relative;
+    top: 16em;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-align: center;
+    display: block;
+    padding: 1em 2em;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    border: 3px solid transparent;
+}
+.redirect-button:hover {
+    background-color: #fff;
+    color: #216796;
+    border: 3px solid #2a7bb1;
+}
+
+
+.error-success p {
+    position: absolute;
+    top: 540px;
+    left: 20px;
+    right: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.error-message {
+    color: rgb(255, 0, 0);
+    display: none;
+}
+
+.success-message {
+    color: green;
+    display: none;
+}
+
+/* Dropdown styles */
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropbtn {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    position: fixed;
+    right: 20px;
+    top: 8px;
+    font-weight: bolder;
+    width: 250px;
+}
+
+/* Dropdown styles */
+.dropdown-content {
+    background-color: rgb(247, 20, 20);
+    display: none;
+    position: absolute;
+    /* Change from 'fixed' to 'absolute' */
+    width: 250px;
+    border-radius: 4px;
+    cursor: pointer;
+    top: 100%;
+    right: 0;
+}
+
+.dropdown-content a {
+    position: absolute;
+    top: 12px;
+    right: 22px;
+    width: 200px;
+    border-radius: 4px;
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-content a:hover {
+    transform: scale(1.1);
+    border: 3px solid #2977ac;
+    color: #2977ac;
+    background-color: #fff;
+    font-weight: bolder;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    color: #ffffff;
+    background-color: #2977ac;
+}
+
+/* Add a class or ID to your main content area */
+.table-container {
+    margin-top: 40px;
+    margin-left: 200px;
+    margin-bottom: 40px;
+    padding: 100px;
+    box-sizing: border-box;
+    background-color: #ececec;
+    min-height: calc(100vh - 80px);
+    min-width: calc(186vh - 70px);
+}
+
+.chart-container {
+    position: relative;
+    margin-top: 40px;
+    margin-left: 200px;
+    padding: 100px;
+    box-sizing: border-box;
+    background-color: #ececec;
+    height: auto;
+    min-width: calc(186vh - 70px);
+}
+
+#trendChart {
+    max-width: 1800px;
+    /* Set the maximum width for the chart canvas */
+    max-height: 500px;
+    /* Set the maximum height for the chart canvas */
+    width: 100%;
+    /* Make the canvas responsive */
+    height: auto;
+    /* Make the canvas responsive */
+    box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.4);
+}
+
+#barChart {
+    max-width: 1800px;
+    /* Set the maximum width for the chart canvas */
+    max-height: 500px;
+    /* Set the maximum height for the chart canvas */
+    width: 100%;
+    /* Make the canvas responsive */
+    height: auto;
+    /* Make the canvas responsive */
+    box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.4);
+
+}
+
+.heatmap-container {
+    margin-top: 10px;
+    margin-left: 200px;
+    margin-bottom: 40px;
+    padding: 100px;
+    box-sizing: border-box;
+    background-color: #ececec;
+    min-height: calc(100vh - 82px);
+    width: 178.7vh;
+}
+
+.form-container {
+    margin-left: 200px;
+    padding: 100px;
+    box-sizing: border-box;
+    background-color: #ececec;
+    min-height: calc(100vh - 80px);
+    min-width: calc(186vh - 70px);
+}
+
+.create-account-btn {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    display: block;
+    padding: 10px;
+    background-color: #37e48d;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    font-size: large;
+}
+
+.create-account-btn:hover {
+    color: #ffffff;
+    background-color: #0f3f27;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .left-panel {
+        display: none;
+    }
+
+    .table-container {
+        margin-left: 0;
+    }
+}
+
+.create-account {
+    text-align: center;
+}
+
+.create-account input[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.create-account input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.update-user-btn {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    display: block;
+    padding: 10px;
+    background-color: #37e48d;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    width: 200px;
+    font-weight: bold;
+    font-size: large;
+}
+
+.update-user-btn:hover {
+    color: #ffffff;
+    background-color: #0f3f27;
+}
+
+.form-container p {
+    color: #4caf50;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#update-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#loading-icon {
+    width: 18px;
+    /* Adjust the width as needed */
+    margin-left: 10px;
+    /* Add margin between the message and the icon */
+}
+
+/* TABLE */
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #ddd;
+}
+
+/* Button styling */
+
+.edit-button,
+.delete-button,
+.toggle-button {
+    text-align: center;
+    cursor: pointer;
+    padding: 10px;
+    /* Adjusted padding for consistent size */
+    border: none;
+    border-radius: 4px;
+    display: inline-block;
+    /* Ensure buttons are on the same line */
+    margin-right: 10px;
+    /* Add margin to separate buttons */
+    width: 90px;
+    /* Set a fixed width for consistency */
+    height: 30px;
+    /* Set a fixed height for consistency */
+    line-height: 1;
+    /* Set a consistent line height */
+    white-space: nowrap;
+    /* Prevent text wrapping */
+    transition: background-color 0.3s, color 0.3s;
+    /* Add transitions for a smooth effect */
+}
+
+
+.toggle-button {
+    background-color: #00ba1f;
+    color: #fff;
+}
+
+
+.edit-button {
+    background-color: #00b4ba;
+    color: white;
+}
+
+.delete-button {
+    background-color: #ba0000;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #8a0000;
+    /* Darken the red color on hover */
+}
+
+/* Style for inactive button */
+.toggle-button.inactive-button {
+    background-color: yellow;
+    color: black;
+    /* Set text color for better visibility */
+}
+
+.toggle-button.inactive-button:hover {
+    background-color: rgb(214, 214, 0);
+    color: black;
+    /* Set text color for better visibility */
+}
+
+.edit-button:hover {
+    background-color: #008c99;
+}
+
+/* Common styles for buttons */
+.toggle-button,
+.edit-button,
+.delete-button,
+.create-account input[type="submit"],
+.create-account-btn,
+.menu-button,
+.login-button a,
+.dropbtn {
+    padding: 10px;
+    /* Adjust the padding as needed */
+}
+
+/* Common styles for edit_user.php and delete_user.php */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h2 {
+    color: #333;
+}
+
+/* Styles specific to edit_user.php */
+#edit-form {
+    margin-top: 20px;
+}
+
+#edit-form input,
+#edit-form button {
+    margin-bottom: 10px;
+}
+
+/* Styles specific to delete_user.php */
+#delete-container {
+    margin-top: 20px;
+}
+
+#delete-container p {
+    color: #FF0000;
+    font-weight: bold;
+}
+
+#delete-form button {
+    background-color: #FF0000;
+    color: #FFF;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+#delete-form button:hover {
+    background-color: #990000;
+}
+
+/* INDEX HEATMAP */
+.map-container {
+    margin-left: 5%; /* Use percentage for margin */
+    padding: 5%; /* Use percentage for padding */
+    box-sizing: border-box;
+    background-color: #ffffff;
+    position: fixed;
+    top: 5%;
+    bottom: 0;
+    left: 5%;
+    right: 0;
+    width: 90vw; /* Use vw (viewport width) for width */
+    height: 90vh; /* Use vh (viewport height) for height */
+}
+.map {
+    box-sizing: border-box;
+    position: fixed;
+    top: 9%;
+    bottom: 0;
+    left: 13%;
+    right: 0;
+    width: 85.5vw;
+    height: 83vh;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+.barangay-container {
+    position: fixed;
+    bottom: 80px;
+    left: 256px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.preventive-measures-container {
+    position: fixed;
+    top: 88px;
+    left: 756px;
+    background-color: rgba(255, 255, 255, 0.507);
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.5s ease;
+    width: 500px;
+    text-align: center;
+}
+
+.preventive-measures-container a {
+    font-size: large;
+    color: #00ba1f;
+    font-weight: bold;
+}
+
+.preventive-measures-container b {
+    font-size: large;
+    color: #baa700;
+    font-weight: bold;
+}
+
+.preventive-measures-container a {
+    font-size: large;
+    color: #00ba1f;
+    font-weight: bold;
+}
+
+.preventive-measures-container c {
+    font-size: large;
+    color: #ba0000;
+    font-weight: bold;
+}
+
+.year-filter-container {
+    font-weight: bold;
+    position: fixed;
+    top: 92px;
+    left: 290px;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.date-picker-container {
+    background-color: #ececec9f;
+    position: absolute;
+    top: 120px;
+    left: 280px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#updateMapButton {
+    font-size: smaller;
+    height: 40px;
+    width: 100px;
+    position: absolute;
+    left: 150px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    /* Add a transition for background-color */
+}
+
+#updateMapButton:hover {
+    background-color: #2980b9;
+    /* Change color on hover */
+}
+
+/* Style for the search container */
+.search-container {
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    /* Center-align the content */
+}
+
+/* Style for the search input and "Filter by Barangay" dropdown */
+.search,
+#barangayFilter {
+    padding: 8px;
+    font-size: 14px;
+    width: 140px;
+    /* Adjust the width as needed */
+    margin-right: 10px;
+    /* Add margin to separate elements */
+}
+
+/* Style for the search buttons */
+.search-button {
+    position: relative;
+    top: 24px;
+    height: 40px;
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Style for the search buttons on hover */
+.search-button:hover {
+    background-color: #2980b9;
+}
+
+/* Flex container styles */
+.flex-container {
+    display: flex;
+    justify-content: center;
+    /* Center-align the flex items */
+}
+
+/* Flex item styles */
+.flex-item {
+    position: relative;
+    top: 12px;
+    margin-right: 10px;
+}
+
+/* Additional spacing between buttons and input/dropdown */
+.flex-item:last-child {
+    margin-right: 0;
+}
+
+.chart-year {
+    position: fixed;
+    top: 120px;
+    left: 1700px;
+    height: 45px;
+    width: 100px;
+    padding: 5px 5px;
+    background-color: rgb(143, 212, 137);
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Pagination buttons */
+.pagination-buttons {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.heatmap-container .pagination-buttons a {
+    display: inline-block;
+    padding: 5px 10px;
+    /* Adjusted padding for a smaller box size */
+    margin: 5px 5px;
+    /* Added margin for horizontal spacing */
+    background-color: transparent;
+    color: #3498db;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid #3498db;
+    /* Added stroke */
+}
+
+.heatmap-container .pagination-buttons a.active {
+    background-color: #2980b9;
+    color: #fff;
+    border: 1px solid #2980b9;
+    /* Added stroke for active page */
+}
+
+.heatmap-container .pagination-buttons a:hover {
+    background-color: #3498db;
+    color: #fff;
+    border: 1px solid #2980b9;
+    /* Change stroke color on hover */
+}
+
+/* Next and Previous buttons */
+.heatmap-container .pagination-buttons .prev-next-button {
+    display: inline-block;
+    padding: 5px 10px;
+    /* Adjusted padding for a smaller box size */
+    margin: 0 5px;
+    /* Added margin for horizontal spacing */
+    background-color: #39db34;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid #39db34;
+    /* Added stroke */
+}
+
+.heatmap-container .pagination-buttons .prev-next-button:hover {
+    background-color: #2980b9;
+    border: 1px solid #2980b9;
+    /* Change stroke color on hover */
+}
+
+/* Add this style for highlighted dates with data */
+.highlighted-date {
+    background-color: #5cb85c;
+    /* Green color, you can adjust this as needed */
+    color: #fff;
+    /* Text color for highlighted date */
+}
