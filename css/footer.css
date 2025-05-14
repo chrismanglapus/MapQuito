@@ -1,0 +1,61 @@
+/* FOOTER.PHP ---------------------------------------------------------------------------------------------*/
+.footer {
+    background-color: #ffffff; /* White background */
+    color: #333333; /* Dark gray text for contrast */
+    padding: 0 20px; /* Horizontal padding */
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3rem; /* Fixed height */
+    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow for a modern feel */
+}
+
+.footer p,
+.footer nav {
+    margin: 0;
+}
+
+.footer strong {
+    font-weight: bold;
+    color: #333333; /* Dark gray for strong text */
+}
+
+.footer .site-links a {
+    text-decoration: none;
+    color: #333333; /* Dark gray links */
+    margin: 0 12px; /* Spacing between links */
+    font-size: 1em;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth color and hover effect */
+}
+
+.footer .site-links a:hover {
+    color: #63b4ff; /* Soft blue on hover */
+    transform: scale(1.1); /* Slightly increase link size on hover */
+}
+
+.footer .copyright {
+    color: #666666; /* Lighter gray for copyright text */
+    font-size: 0.9em; /* Adjust font size */
+    margin-top: 0; /* Removed extra margin */
+}
+
+@media (max-width: 600px) {
+    .footer {
+        padding: 0 10px; /* Adjust horizontal padding for smaller screens */
+    }
+
+    .footer .site-links a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .footer .copyright {
+        font-size: 1em; /* Slightly larger copyright text on small screens */
+    }
+}

@@ -1,0 +1,219 @@
+
+/* ABOUT US.PHP ---------------------------------------------------------------------------------------------*/
+.about-us {
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: calc(100% - 248px);
+    height: calc(100% - 108px);
+    margin-top: 3.5em;
+    /* Retain margin for vertical spacing */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+    /* Use transform for animation */
+    transform: translateX(0);
+    /* Default position */
+    z-index: 0;
+    overflow-y: auto;
+    /* Allow body to scroll if content exceeds viewport */
+}
+
+.about-us-container {
+    transition: margin-left 0.3s ease;
+    width: calc(100% - 200px);
+}
+
+.about-us-container.menu-hidden .about-us {
+    transform: translateX(-8.5em);
+    /* Adjust based on the hidden state */
+}
+
+/* About Us Section Styles */
+.about-us-header {
+    background-color: #63b4ff;
+    color: #fff;
+    padding: 60px 60px;
+}
+
+.about-us-header h1 {
+    display: flex;
+    align-items: center;
+    /* Vertically align text and logo */
+    font-size: 2.5em;
+    /* Adjust title font size */
+}
+
+.about-us-header h1 img {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.about-us-header p {
+    font-size: 1.2em;
+    font-weight: lighter;
+}
+
+.about-us-intro p {
+    padding: 0 60px;
+    font-size: 1.2em;
+    font-weight: lighter;
+}
+
+.technology-intro p {
+    padding: 0 60px;
+    font-size: 1.2em;
+    font-weight: lighter;
+}
+
+/* Team Section */
+.about-us-content .about-us-team {
+    display: flex;
+    flex-direction: column;
+    /* Title stays on top */
+    align-items: center;
+    /* Center the title */
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.about-us-content h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #63b4ff;
+    text-align: center;
+    /* Center the title */
+}
+
+/* Team Section */
+.about-us-content .about-us-team {
+    display: flex;
+    flex-direction: column;
+    /* Title stays on top of the images */
+    align-items: center;
+    /* Center the title */
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.about-us-content h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #63b4ff;
+    text-align: center;
+    /* Center the title */
+}
+
+/* Team Members Horizontal Layout */
+.about-us-content .about-us-team-members {
+    display: flex;
+    justify-content: center;
+    /* Center the team members horizontally */
+    gap: 180px;
+    /* Space between team members */
+    margin-bottom: 30px;
+    /* Bottom margin */
+}
+
+.about-us-content .about-us-team-member {
+    width: 150px;
+    /* Fixed width for each member */
+    margin: 10px;
+}
+
+.about-us-team-member img {
+    width: 150px;
+    /* Fixed width */
+    height: 150px;
+    /* Fixed height for circular shape */
+    object-fit: cover;
+    border-radius: 50%;
+    /* Circular shape */
+    border: 10px solid #63b4ff;
+    /* Add border */
+    margin-bottom: 10px;
+}
+
+.about-us-content .about-us-team-member h3 {
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+.about-us-content .about-us-team-member p {
+    font-style: italic;
+    color: #777;
+}
+
+
+.about-us-technology {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.about-us-technology h2 {
+    font-size: 2.5em;
+    color: #63b4ff;
+    margin-bottom: 20px;
+}
+
+.about-us-technology p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+.technology-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 items per row */
+    gap: 20px;
+    /* Space between items */
+    justify-items: center;
+    grid-auto-rows: minmax(180px, auto);
+    /* Set a minimum height for each box */
+}
+
+.technology-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    /* Padding inside the item */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 250px;
+    /* Limit max width */
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.technology-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.technology-item h3 {
+    font-size: 1.3em;
+    color: #63b4ff;
+    margin-bottom: 8px;
+}
+
+.technology-item p {
+    font-size: 0.95em;
+    color: #555;
+    margin-bottom: 0;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .about-us-content .about-us-team {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-us-content .about-us-team-member {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}

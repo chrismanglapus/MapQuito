@@ -1,0 +1,81 @@
+
+/* EDIT USER FORM.PHP ---------------------------------------------------------------------------------------------*/
+.eu-body {
+    color: #3d3d3d;
+    background-color: #f5f5f5;
+    overflow-y: auto;
+    /* Allow body to scroll if content exceeds viewport */
+    position: absolute;
+    max-height: fit-content;
+    box-sizing: border-box;
+    right: 0;
+    top: 0;
+    width: calc(100% - 248px);
+    transition: margin-left 0.3s ease;
+}
+
+.eu-container {
+    width: 90%;
+    /* Ensure responsiveness */
+    max-width: 600px;
+    max-height: fit-content;
+    margin: 5% auto 5% auto;
+    /* Center horizontally and add top margin */
+    position: relative;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+    overflow-y: auto;
+    /* Allow body to scroll if content exceeds viewport */
+    transition: transform 0.3s ease;
+    /* Use transform for animation */
+    transform: translateX(0);
+    /* Default position */
+}
+
+.eu-body.menu-hidden .eu-container {
+    transform: translateX(-8.5em);
+    /* Adjust based on the hidden state */
+}
+
+.eu-container input[type="text"],
+.eu-container input[type="password"],
+.eu-container input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    /* Adjust spacing to fit smaller screens */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.eu-container .update-user-btn {
+    text-align: center;
+    display: block;
+    padding: 10px;
+    background-color: #272727;
+    color: #fff;
+    margin-top: 10px;
+    font-size: large;
+    border-radius: 10px;
+    width: 100%;
+    /* Make button span full width */
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .eu-container {
+        margin: 10% auto;
+        /* Increase margin for smaller screens */
+        width: 95%;
+        /* Reduce width to fit smaller screens */
+    }
+
+    .eu-body {
+        width: 100%;
+        /* Ensure body spans full width */
+    }
+}
+

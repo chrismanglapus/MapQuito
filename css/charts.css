@@ -1,0 +1,186 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: Poppins, "Segoe UI", sans-serif;
+  line-height: 1.5rem;
+}
+body {
+  overflow: hidden;
+}
+
+.chart-main {
+  width: calc(100% - 250px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: min(30px, 7%);
+  box-sizing: border-box;
+  z-index: 0;
+  transition: 300ms ease-in-out;
+  height: 100dvh;
+  overflow-y: auto;
+}
+
+.chart-main.close {
+  width: calc(100% - 250px + 190px);
+}
+
+@media (max-width: 800px) {
+  .chart-main {
+    width: 100%;
+    height: calc(100vh - 60px);
+    padding: 0 10px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .chart-container {
+    width: 100%;
+    height: auto;
+    margin-bottom: 3em;
+    padding: 0;
+    box-sizing: border-box;
+
+    > h2 {
+      margin-top: none;
+      padding: none;
+      font-size: 1.5vw;
+      font-weight: none;
+    }
+  }
+}
+
+.chart-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+  box-sizing: border-box;
+
+  #yearSelectTrend,
+  #yearSelectBar {
+    box-sizing: border-box;
+    padding: 8px;
+    margin-top: 2em;
+    width: 20%;
+    text-align: center;
+    position: sticky;
+    top: 0;
+  }
+}
+.chart-container h2 {
+  padding: 8px;
+  font-size: 2.5vw;
+  font-weight: 600;
+  box-sizing: border-box;
+}
+
+.trendChart-container {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+  padding: 4em;
+  box-sizing: border-box;
+  gap: 2em;
+}
+#trendChart {
+  width: 95vw; /* Make it almost full width */
+  max-width: 1500px; /* Prevent it from stretching too much */
+  height: 65vh; /* Set height to fit your screen */
+  max-height: 600px; /* Prevent excessive height */
+  box-shadow: var(--shadow-color-right-1) 5px 5px,
+    var(--shadow-color-right-2) 10px 10px, var(--shadow-color-right-3) 15px 15px,
+    var(--shadow-color-right-4) 20px 20px, var(--shadow-color-right-5) 25px 25px;
+  transition: 300ms ease-in-out;
+}
+
+@media (max-width: 800px) {
+  #trendChart {
+    width: 100vw; /* Full width on smaller screens */
+    height: 60vh; /* Slightly smaller height for small screens */
+    max-height: 400px;
+  }
+}
+
+.chart-tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-size: 1vw;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+  white-space: nowrap;
+  z-index: 100;
+}
+
+#dynamic-legend {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  font-size: 1vw;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  white-space: nowrap;
+}
+
+.trend-chart-body .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.trend-chart-body .legend-item strong {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.trend-chart-body .legend-item span {
+  display: inline-block;
+  min-width: 40px;
+  /* Ensures numbers have a consistent width */
+  text-align: left;
+  font-weight: bold;
+}
+
+.barChart-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4em;
+  box-sizing: border-box;
+}
+#barChart {
+  width: 95vw; /* Make it almost full width */
+  max-width: 1500px; /* Prevent it from stretching too much */
+  height: 100dvh; /* Set height to fit your screen */
+  transition: 300ms ease-in-out;
+}
+@media (max-width: 800px) {
+  #barChart {
+    width: 100vw; /* Full width on smaller screens */
+    height: 60vh; /* Slightly smaller height for small screens */
+    max-height: 400px;
+  }
+}

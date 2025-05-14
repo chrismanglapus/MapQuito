@@ -1,0 +1,356 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Poppins, "Segoe UI", sans-serif;
+  line-height: 1.5rem;
+}
+
+body {
+  overflow: hidden;
+}
+
+/* Main Container */
+.manage-data {
+  width: calc(100% - 250px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  transition: 300ms ease-in-out;
+  height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 30px;
+}
+
+.manage-data.close {
+  width: calc(100% - 250px + 190px);
+}
+
+/* Page Header */
+.manage-data__header {
+  text-align: center;
+  padding: min(30px, 7%);
+  h1 {
+    font-size: 2vw;
+    font-weight: 600;
+  }
+}
+
+/* Data Management Section */
+.manage-data__section,
+.manage-data__modal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: min(30px, 7%);
+  gap: 10px;
+  margin: auto;
+  width: 100%;
+
+  .btn-primary,
+  .btn-secondary {
+    cursor: pointer;
+    padding: 15px;
+    border: 3px solid transparent;
+    border-radius: 10px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease-in-out;
+    background-color: var(--primary-btn-color);
+    font-size: 1vw;
+  }
+
+  .btn-primary svg,
+  .btn-secondary svg {
+    margin-right: 10px;
+  }
+
+  /* Button Hover Effects */
+  .btn-primary::before,
+  .btn-secondary::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease-in-out;
+    z-index: -1;
+  }
+
+  #addDataBtn::before {
+    background-color: #28a745;
+  }
+  #exportBtn::before {
+    background-color: #dc3545;
+  }
+
+  .btn-primary:hover::before,
+  .btn-secondary:hover::before {
+    transform: scaleX(1);
+  }
+
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    color: white;
+    position: relative;
+    z-index: 2;
+  }
+
+  span {
+    font-weight: 600;
+    color: var(--btn-text-color);
+    text-decoration: none;
+    text-align: center;
+  }
+}
+
+.modal-content {
+  background: var(--base-color);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  padding: min(30px, 7%);
+  z-index: 4;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 3; /* Ensure it covers the background but stays behind the modal */
+}
+.modal-card__header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1em;
+  margin-bottom: 1em;
+
+  label {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  input {
+    width: 100%;
+    padding: 0.5em;
+    font-size: 1em;
+    border: 1px solid var(--text-color);
+    border-radius: 10px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+  }
+}
+.modal-card__buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 1em;
+  margin-top: 3em;
+
+  .btn-primary {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+    background: var(--good-color);
+    font-size: 1vw;
+  }
+  .btn-secondary {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background: var(--bad-color);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+    font-size: 1vw;
+  }
+  button,
+  button span {
+    transition: 200ms;
+  }
+
+  button .text {
+    color: white;
+    font-weight: bold;
+  }
+
+  button .icon {
+    position: absolute;
+    transform: translateX(95px);
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-primary .icon {
+    border-left: 1px solid #006e00;
+  }
+  .btn-secondary .icon {
+    border-left: 1px solid #6e0000;
+  }
+  button svg {
+    width: 20px;
+    fill: #eee;
+  }
+
+  .btn-primary:hover {
+    background: #00a600;
+  }
+  .btn-secondary:hover {
+    background: #a60000;
+  }
+  button:hover .text {
+    color: transparent;
+  }
+
+  button:hover .icon {
+    width: 150px;
+    border-left: none;
+    transform: translateX(0);
+  }
+
+  button:focus {
+    outline: none;
+  }
+
+  button:active .icon svg {
+    transform: scale(0.8);
+  }
+}
+/* Ensures the header stays at the top */
+.modal-header {
+  width: 100%;
+  font-size: 1.5em;
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: auto;
+}
+/* Center the form inside the modal */
+#addDataForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  flex-grow: 1; /* Allows the form to expand and center */
+  width: 100%;
+}
+.exportDataForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-grow: 1;
+  width: 100%;
+  gap: 1em;
+
+  label {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--text-color);
+    align-self: flex-start;
+  }
+
+  select {
+    width: 100%;
+    padding: 0.5em;
+    font-size: 1em;
+    border: 1px solid var(--text-color);
+    border-radius: 10px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+  }
+}
+.modal-card p {
+  color: red;
+  margin-top: 10px;
+  font-size: 1.5em;
+  z-index: 5;
+  padding: 10px;
+}
+
+/* Year Selection */
+.year-selection {
+  text-align: center;
+  padding: min(30px, 7%);
+}
+
+.year-selection__header {
+  margin-bottom: 20px;
+}
+
+.year-selection h2 {
+  font-size: 1.8vw;
+  font-weight: 600;
+}
+
+/* Year Button Container */
+.year-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Year Buttons */
+.year-btn {
+  cursor: pointer;
+  text-align: center;
+  background-color: #272727;
+  color: #fff;
+  border: none;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 160px;
+  height: 160px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.year-btn:hover {
+  background-color: #ff7f00;
+  transform: scale(1.08);
+}

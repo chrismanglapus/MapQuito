@@ -1,0 +1,198 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Poppins, "Segoe UI", sans-serif;
+  line-height: 1.5rem;
+}
+
+body {
+  overflow: hidden;
+}
+
+/* Main Container */
+.create_account__main {
+  width: calc(100% - 250px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  transition: 300ms ease-in-out;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  padding-top: 40px; /* Moves content down slightly */
+}
+.create_account__main.close {
+  width: calc(100% - 250px + 190px);
+}
+
+.create_account__header {
+  margin-bottom: 40px;
+}
+
+.create_account__create_profile {
+  display: block;
+  width: 100%;
+  max-width: 48rem;
+}
+
+.create_account__form {
+  display: flex; /* Makes the form a flex container */
+  flex-direction: column; /* Stacks elements vertically */
+  gap: 10px; /* Adds space between child elements */
+}
+.field-group {
+  margin-bottom: 20px; /* Adds bottom margin to each field group */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  input {
+    padding: 8px 12px; /* Adds padding to input fields */
+    border: 1px solid #ccc; /* Adds a border around the input */
+    border-radius: 4px; /* Rounds the corners of the input */
+    font-size: 16px; /* Sets the font size of the input */
+  }
+}
+.btn-container {
+  display: flex; /* Makes the container a flex container */
+  gap: 10px; /* Adds space between buttons */
+  justify-content: flex-end; /* Aligns buttons to the right */
+
+  button,
+  a {
+    padding: 8px 16px; /* Adds padding to the button */
+    border: none; /* Removes the border */
+    border-radius: 4px; /* Rounds the corners of the button */
+    background-color: var(
+      --primary-btn-color
+    ); /* Sets the background color of the button */
+    color: var(--btn-text-color); /* Sets the text color of the button */
+    font-size: 16px; /* Sets the font size of the button */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+    text-decoration: none; /* Removes underline from links */
+  }
+}
+/* Success message overlay styles */
+#success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 128, 0, 0.8);
+  /* Darker green */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+#success-overlay .message-content {
+  text-align: center;
+  color: white;
+  transform: scale(0.8);
+  animation: scaleUp 0.6s forwards, bounceIcon 1s ease-out infinite;
+}
+
+/* Scale-up animation for the entire success message */
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Bounce animation for the success icon */
+@keyframes bounceIcon {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+#success-overlay i {
+  font-size: 4rem;
+  margin-bottom: 10px;
+}
+
+#success-overlay p {
+  font-size: 1.25rem;
+  margin-top: 10px;
+}
+
+/* Error message overlay styles */
+#error-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 0, 0, 0.8);
+  /* Darker red */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+#error-overlay .message-content {
+  text-align: center;
+  color: white;
+  transform: scale(0.8);
+  animation: scaleUp 0.6s forwards, shakeIcon 0.8s ease-out;
+}
+
+/* Shake animation for the error icon */
+@keyframes shakeIcon {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-10px);
+  }
+
+  50% {
+    transform: translateX(10px);
+  }
+
+  75% {
+    transform: translateX(-10px);
+  }
+}
+
+#error-overlay i {
+  font-size: 4rem;
+  margin-bottom: 10px;
+}
+
+#error-overlay p {
+  font-size: 1.25rem;
+  margin-top: 10px;
+}
+
+/* Error message styles */
+#error-message {
+  color: red;
+  text-align: center;
+  margin-top: 15px;
+}

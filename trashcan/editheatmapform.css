@@ -1,0 +1,102 @@
+
+/* EDIT HEATMAP FORM.PHP ---------------------------------------------------------------------------------------------*/
+.eh-body {
+    color: #3d3d3d;
+    background-color: #f5f5f5;
+    overflow-y: auto;
+    /* Allow body to scroll if content exceeds viewport */
+    position: absolute;
+    max-height: fit-content;
+    box-sizing: border-box;
+    right: 0;
+    top: 0;
+    width: calc(100% - 248px);
+    transition: margin-left 0.3s ease;
+}
+
+.eh-container {
+    width: 90%;
+    /* Ensure responsiveness */
+    max-width: 600px;
+    max-height: fit-content;
+    margin: 5% auto 5% auto;
+    /* Center horizontally and add top margin */
+    position: relative;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+    overflow-y: auto;
+    /* Allow body to scroll if content exceeds viewport */
+    transition: transform 0.3s ease;
+    /* Use transform for animation */
+    transform: translateX(0);
+    /* Default position */
+}
+
+.eh-body.menu-hidden .eh-container {
+    transform: translateX(-8.5em);
+    /* Adjust based on the hidden state */
+}
+
+.eh-form {
+    color: #3d3d3d;
+    text-align: center;
+    overflow-y: auto;
+    /* Allow body to scroll if content exceeds viewport */
+}
+
+.eh-container h2 {
+    margin-bottom: 60px;
+    font-size: 24px;
+    color: #3d3d3d;
+    overflow-y: auto;
+    /* Allow body to scroll if content exceeds viewport */
+
+}
+
+.eh-container label {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.eh-container input[type="text"],
+.eh-container input[type="number"],
+.eh-container input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.eh-container .update-btn {
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    padding: 10px;
+    background-color: #272727;
+    color: #fff;
+    margin-top: 2em;
+    font-size: large;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.eh-container .update-btn:hover {
+    background-color: #fff;
+    color: #0f0f0f;
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+    .hf-container {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

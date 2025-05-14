@@ -1,0 +1,97 @@
+.charts-body {
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+    width: calc(99% - 256px);
+    color: #050505;
+    margin-bottom: 130px;
+}
+
+/* When menu is hidden, take up full width */
+.charts-body.menu-hidden {
+    margin-left: 0;
+    width: 100%;
+}
+
+.charts-container {
+    box-sizing: border-box;
+    position: relative;
+    top: 60px;
+    bottom: 60px;
+    left: 256px;
+    right: 0;
+    padding: 0 80px;
+    margin-bottom: 50px;
+    transition: transform 0.3s ease-in-out, margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+/* When menu is hidden, ensure charts go fullscreen */
+.charts-body.menu-hidden .charts-container {
+    left: 0;
+    width: 100%;
+    padding: 0 40px;
+    transform: none;
+}
+
+.chart {
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    box-sizing: border-box;
+    position: relative;
+    padding: 20px 80px;
+    /* Added padding inside the chart */
+    width: 100%;
+    flex-grow: 1;
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+/* When menu is hidden, adjust width but keep height flexible */
+.charts-body.menu-hidden .chart {
+    width: 100%;
+    max-width: 1832px;
+    margin: 0 auto; /* Centers the chart */
+    padding: 20px 40px; /* Keeps padding */
+    height: 800px; /* Custom height */
+    display: flex;
+    flex-direction: column; /* Stack title, dropdown, and chart */
+}
+
+/* New wrapper to center only the chart */
+.chart-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1; /* Allows the chart to fill remaining space */
+}
+
+
+.charts-body h2 {
+    text-align: center;
+}
+
+/* Limit the width of the year filter dropdown */
+#yearSelectTrend,
+#yearSelectBar {
+    text-align: center;
+    max-width: 200px; /* Adjust as needed */
+    width: 100%; /* Ensures it remains responsive */
+    margin: 10px auto; /* Centers it */
+    margin-bottom: 20px;
+    display: block; /* Ensures proper alignment */
+}
+
+@media (max-width: 768px) {
+    .charts-container {
+        width: 100%;
+        padding: 0;
+    }
+
+    .chart {
+        width: 100%;
+        margin-left: 0;
+        left: 0;
+        padding: 20px;
+        /* Keeps padding on smaller screens */
+        height: auto;
+    }
+}
+

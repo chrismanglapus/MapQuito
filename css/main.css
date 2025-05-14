@@ -1,0 +1,42 @@
+@import url("navbar.css");
+
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+:root {
+  --base-color: #ffffff; /* White background */
+  --line-color: #f1f1f1; /* Light gray lines */
+  --hover-color: #ffb84d; /* Softer, golden orange hover color */
+  --text-color: #11121a; /* Dark text */
+  --accent-color: #ff6347; /* Tomato red accent */
+  --secondary-text-color: #333333; /* Dark gray for secondary text */
+  --good-color: #00af00; /* Green for good things */
+  --bad-color: #ff0000; /* Red for bad things */
+  --warning-color: #ff6347; /* Tomato red for warnings */
+  --primary-btn-color: #272727; /* Dark gray for primary buttons */
+  --btn-text-color: #ffffff; /* White text for buttons */
+}
+
+.dark-mode {
+  --base-color: #11121a; /* Dark background */
+  --line-color: #333333; /* Dark gray lines */
+  --hover-color: #ff6347; /* Softer, golden orange hover color */
+  --text-color: #ffffff; /* White text */
+  --accent-color: #ff6347; /* Tomato red accent */
+  --secondary-text-color: #f1f1f1; /* Light gray for secondary text */
+}
+
+.theme-orange {
+  --shadow-color-right-1: rgba(255, 99, 71, 0.4);
+  /* Right-side shadow */
+  --shadow-color-right-2: rgba(255, 99, 71, 0.3);
+  --shadow-color-right-3: rgba(255, 99, 71, 0.2);
+  --shadow-color-right-4: rgba(255, 99, 71, 0.1);
+  --shadow-color-right-5: rgba(255, 99, 71, 0.05);
+
+  --shadow-color-left-1: rgba(255, 99, 71, 0.4);
+  /* Left-side shadow */
+  --shadow-color-left-2: rgba(255, 99, 71, 0.3);
+  --shadow-color-left-3: rgba(255, 99, 71, 0.2);
+  --shadow-color-left-4: rgba(255, 99, 71, 0.1);
+  --shadow-color-left-5: rgba(255, 99, 71, 0.05);
+}

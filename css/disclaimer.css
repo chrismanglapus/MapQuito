@@ -1,0 +1,88 @@
+/* Minimalist & Modern Disclaimer Design =========================================================================================================================================*/
+.disclaimer {
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: calc(100% - 248px);
+    height: calc(100% - 108px);
+    margin-top: 3.5em;
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+    z-index: 0;
+    overflow-y: auto;
+    padding: 40px 60px;
+}
+
+.disclaimer-container {
+    transition: margin-left 0.3s ease;
+    width: calc(100% - 200px);
+}
+
+.disclaimer-container.menu-hidden .disclaimer {
+    transform: translateX(-8.5em);
+    /* Adjust based on the hidden state */
+}
+
+/* Header Styling */
+.disclaimer-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.disclaimer-header h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin: 0;
+}
+
+.disclaimer-header p {
+    font-size: 1.1em;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* Disclaimer Section Styling */
+.disclaimer-item {
+    background-color: #fff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    padding: 20px;
+}
+
+.disclaimer-item h2 {
+    font-size: 1.4em;
+    color: #007BFF;
+    margin-bottom: 10px;
+}
+
+.disclaimer-item p {
+    font-size: 1em;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .disclaimer-container {
+        padding: 15px;
+    }
+
+    .disclaimer-header h1 {
+        font-size: 2em;
+    }
+
+    .disclaimer-header p {
+        font-size: 1em;
+    }
+
+    .disclaimer-item h2 {
+        font-size: 1.2em;
+    }
+
+    .disclaimer-item p {
+        font-size: 0.9em;
+    }
+}

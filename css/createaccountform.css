@@ -1,0 +1,89 @@
+
+/* CREATE ACCOUNT FORM.PHP ---------------------------------------------------------------------------------------------*/
+.ca-body {
+    color: #3d3d3d;
+    background-color: #f5f5f5;
+    overflow-y: auto;
+    /* Allow body to scroll if content exceeds viewport */
+    position: absolute;
+    max-height: fit-content;
+    box-sizing: border-box;
+    right: 0;
+    top: 0;
+    width: calc(100% - 248px);
+    transition: margin-left 0.3s ease;
+}
+
+.ca-container {
+    width: 90%;
+    /* Ensure responsiveness */
+    max-width: 600px;
+    max-height: fit-content;
+    margin: 5% auto 5% auto;
+    /* Center horizontally and add top margin */
+    position: relative;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+    overflow-y: auto;
+    /* Allow body to scroll if content exceeds viewport */
+    transition: transform 0.3s ease;
+    /* Use transform for animation */
+    transform: translateX(0);
+    /* Default position */
+}
+
+.ca-body.menu-hidden .ca-container {
+    transform: translateX(-8.5em);
+    /* Adjust based on the hidden state */
+}
+
+.ca-form {
+    color: #3d3d3d;
+    text-align: center;
+}
+
+.ca-container h2 {
+    margin-bottom: 60px;
+    font-size: 24px;
+    color: #3d3d3d;
+}
+
+.ca-container label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.ca-container input[type="text"],
+.ca-container input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.ca-container .create-user-btn {
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    padding: 10px;
+    background-color: #272727;
+    color: #fff;
+    border: 3px solid transparent;
+    margin-top: 10px;
+    font-size: large;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ca-container .create-user-btn:hover {
+    border: 3px solid #0f0f0f;
+    background-color: #fff;
+    color: #0f0f0f;
+}

@@ -1,0 +1,280 @@
+/* -------------------------------------------------------------------------------- */
+/* MODALS - Blurred Background Instead of Darkening */
+/* -------------------------------------------------------------------------------- */
+.modal {
+  display: flex;
+  opacity: 0;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  justify-content: center;
+  align-items: center;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  pointer-events: none;
+}
+
+.modal.show {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.743);
+}
+
+.modal-content {
+  background: white;
+  padding: 0;
+  border-radius: 5px;
+  width: 900px;
+  height: 650px;
+  text-align: left;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-30px);
+  transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+/* -------------------------------------------------------------------------------- */
+/* LEFT SIDE: IMAGE WITH GRADIENT */
+/* -------------------------------------------------------------------------------- */
+.modal-left {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 20px;
+  background: url("../assets/townplaza.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.modal-left::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(1px);
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.modal-text {
+  text-align: center;
+  position: relative;
+  z-index: 4;
+}
+
+.modal-left p {
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  text-align: center;
+  margin-top: -5px;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 4;
+}
+
+.modal-left h2 {
+  font-size: 42px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.modal-left img {
+  width: 250px;
+  height: auto;
+  margin-bottom: 10px;
+  z-index: 4;
+}
+
+/* -------------------------------------------------------------------------------- */
+/* RIGHT SIDE: LOGIN FORM */
+/* -------------------------------------------------------------------------------- */
+.modal-right {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-right h2 {
+  margin-bottom: 1.5vw;
+}
+
+.modal-right input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.modal-right button {
+  width: 100%;
+  padding: 10px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.modal-right button:hover {
+  background: #0056b3;
+}
+
+@media (max-width: 800px) {
+  .modal-content {
+    background: white;
+    box-sizing: border-box;
+    max-width: 800px;
+    width: 100dvh;
+    height: 100dvh;
+    position: fixed;
+    overflow: hidden;
+  }
+  .modal-left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+  }
+  .modal-text {
+    text-align: center;
+    position: fixed;
+    top: 30px;
+  }
+  .modal-left img {
+    position: absolute;
+    top: 80px;
+  }
+  .modal-right {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    box-sizing: border-box;
+    margin-top: 30px;
+    color: var(--base-color);
+  }
+  .modal-close {
+    position: fixed;
+    left: 50%;
+    bottom: 0%;
+  }
+}
+
+/* -------------------------------------------------------------------------------- */
+/* CLOSE BUTTON (KEEPS YOUR STYLE) */
+/* -------------------------------------------------------------------------------- */
+
+.modal-close {
+  width: 30px; /* Set the width of the button */
+  height: 30px; /* Set the height of the button */
+  border-radius: 50%;
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  background: none;
+  border: 2px solid red;
+  color: #333;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: red;
+}
+
+/* -------------------------------------------------------------------------------- */
+/* TOAST NOTIFICATION - FIXED POSITION BELOW MODAL */
+/* -------------------------------------------------------------------------------- */
+.toast {
+  visibility: hidden;
+  min-width: 250px;
+  background: black;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  position: fixed;
+  top: 60%;
+  /* ✅ Adjusted to appear below the modal */
+  left: 50%;
+  /* ✅ Centered horizontally */
+  transform: translate(-50%, 0);
+  /* ✅ Keeps it aligned */
+  border-radius: 5px;
+  z-index: 9999;
+  /* ✅ Ensures it's in front of the modal */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  /* ✅ Soft shadow */
+}
+
+/* Show Toast */
+.toast.show {
+  visibility: visible;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+/* Success & Error Styling */
+.toast-success {
+  background: green;
+}
+
+.toast-error {
+  background: red;
+}
+
+/* Fade In/Out Animation */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

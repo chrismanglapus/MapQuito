@@ -1,0 +1,119 @@
+
+/* HEATMAP FORM.PHP ---------------------------------------------------------------------------------------------*/
+.hf-body {
+    color: #3d3d3d;
+    background-color: #f5f5f5;
+    overflow-y: auto;
+    /* Allow body to scroll if content exceeds viewport */
+    position: absolute;
+    max-height: fit-content;
+    box-sizing: border-box;
+    right: 0;
+    top: 0;
+    width: calc(100% - 248px);
+    transition: margin-left 0.3s ease;
+}
+
+.hf-container {
+    width: 90%;
+    /* Ensure responsiveness */
+    max-width: 600px;
+    max-height: fit-content;
+    margin: 5% auto 5% auto;
+    /* Center horizontally and add top margin */
+    position: relative;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+    overflow-y: auto;
+    /* Allow body to scroll if content exceeds viewport */
+    transition: transform 0.3s ease;
+    /* Use transform for animation */
+    transform: translateX(0);
+    /* Default position */
+}
+
+.hf-body.menu-hidden .hf-container {
+    transform: translateX(-8.5em);
+    /* Adjust based on the hidden state */
+}
+
+.hr-container hr {
+    border: none;
+    height: 5px;
+    background-color: #c7c7c78e;
+    border-radius: 30px;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-align: center;
+}
+
+.hf-container h2 {
+    margin-bottom: 60px;
+    text-align: center;
+    font-weight: bolder;
+    color: #3d3d3d;
+}
+
+.hf-container label {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.hf-container input[type="file"],
+.hf-container input[type="number"],
+.hf-container input[type="text"],
+.hf-container select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.hf-container .csv-form,
+.manual-form {
+    color: #3d3d3d;
+    text-align: center;
+}
+
+.csv-form p {
+    margin-top: 25px;
+    font-size: smaller;
+    padding: 4px;
+    background-color: #0d9900;
+    color: #ffffff;
+}
+
+.hf-container .submit-btn {
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    padding: 10px;
+    background-color: #272727;
+    color: #fff;
+    margin-top: 10px;
+    font-size: large;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.hf-container .submit-btn:hover {
+    background-color: #fff;
+    color: #0f0f0f;
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+    .hf-container {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
