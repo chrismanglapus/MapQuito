@@ -40,19 +40,22 @@ include('phps/php__barangay_list.php')
                     <input type="hidden" name="year" value="<?php echo htmlspecialchars($year, ENT_QUOTES); ?>">
 
                     <!-- ✅ Sticky Delete Button Container (NOW INSIDE FORM) -->
-                    <div class="sticky-container">
+                     <div class="sticky-container">
                         <button class="back-btn" onclick="window.location.href='manage_data.php'; return false;"> Back</button>
+                        <!--
                         <button type="submit" name="deleteSelected" class="delete-btn">Delete Selected</button>
                         <button type="submit" name="deleteAll" class="delete-btn" onclick="return confirmDeleteAll();">Delete All</button>
+                        -->
                     </div>
-
                     <!-- ✅ Table Section -->
                     <section id="table-section">
                         <div class="table-container">
                             <table>
                                 <thead>
                                     <tr>
+                                        <!--
                                         <th><input type="checkbox" id="selectAll"></th>
+                                        -->
                                         <th>Barangay Name</th>
                                         <th></th>
                                     </tr>
@@ -60,7 +63,9 @@ include('phps/php__barangay_list.php')
                                 <tbody>
                                     <?php foreach ($barangays as $barangay) : ?>
                                         <tr>
+                                            <!--
                                             <td><input type="checkbox" name="selected_barangays[]" value="<?php echo htmlspecialchars($barangay, ENT_QUOTES); ?>"></td>
+                                            -->
                                             <td><?php echo htmlspecialchars($barangay, ENT_QUOTES); ?></td>
                                             <td>
                                                 <button type="button" class="btn-tertiary" onclick="showData('<?php echo urlencode($barangay); ?>', '<?php echo urlencode($year); ?>')">

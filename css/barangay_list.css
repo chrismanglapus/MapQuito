@@ -35,7 +35,6 @@ body {
   text-align: center;
   padding: min(30px, 7%);
 }
-
 .barangay-list__header h1 {
   font-size: 2vw;
   font-weight: 600;
@@ -66,36 +65,35 @@ body {
   transition: box-shadow 0.3s ease;
   margin-top: 30px;
   margin-bottom: 20px;
-
-  .delete-btn,
-  .back-btn {
-    padding: 10px 20px;
-    color: var(--btn-text-color);
-    background-color: var(--primary-btn-color);
-    font-size: 1em;
-    font-weight: bold;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-    text-decoration: none;
-  }
-  .delete-btn:hover,
-  .back-btn:hover {
-    transform: scale(1.05);
-  }
-  .delete-btn:hover {
-    background: var(--bad-color);
-  }
-  .back-btn::before {
-    content: "←";
-    font-size: 1.1em;
-    margin-right: 8px;
-    color: var(--btn-text-color);
-    background-color: var(--primary-btn-color);
-  }
 }
 
+.sticky-container .delete-btn,
+.sticky-container .back-btn {
+  padding: 10px 20px;
+  color: var(--btn-text-color);
+  background-color: var(--primary-btn-color);
+  font-size: 1em;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+.sticky-container .delete-btn:hover,
+.sticky-container .back-btn:hover {
+  transform: scale(1.05);
+}
+.sticky-container .delete-btn:hover {
+  background: var(--bad-color);
+}
+.sticky-container .back-btn::before {
+  content: "←";
+  font-size: 1.1em;
+  margin-right: 8px;
+  color: var(--btn-text-color);
+  background-color: var(--primary-btn-color);
+}
 .sticky-container:hover {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
 }
@@ -105,109 +103,92 @@ body {
   flex: 1;
   width: 100%;
   overflow-x: auto;
-
-  table {
-    width: 100%;
-    margin: auto; /* Centers the table horizontally */
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  th {
-    background: var(--accent-color);
-    color: white;
-    font-weight: bold;
-    text-align: center; /* Centers the header text horizontally */
-    vertical-align: middle; /* Centers the header text vertically */
-    padding: 8px 12px;
-    font-size: 0.95rem;
-  }
-
-  td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #ddd;
-    font-size: 0.9rem;
-    text-align: center; /* Center all text and inline elements */
-    vertical-align: middle; /* Vertically center the elements */
-  }
-
-  /* Centering checkboxes and buttons using Flexbox */
-  td input[type="checkbox"],
-  td .show-data-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: auto;
-    height: auto;
-  }
-  /* Reset the default checkbox appearance for all checkboxes */
-  input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 18px; /* Set a fixed size for the checkbox */
-    height: 18px; /* Fixed height */
-    border: 2px solid #ddd;
-    border-radius: 4px;
-    position: relative;
-    background-color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-
-  /* Custom checkbox effect when checked */
-  input[type="checkbox"]:checked {
-    background-color: #4caf50; /* Green background when checked */
-    border-color: #4caf50; /* Green border */
-    transform: scale(1.1); /* Slightly enlarge the checkbox */
-  }
-
-  /* Adding a tick mark to the checkbox when it is checked */
-  input[type="checkbox"]:checked::after {
-    content: "✔";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 14px;
-  }
-
-  /* Center checkboxes in table cells for both <thead> and <tbody> */
-  td input[type="checkbox"],
-  th input[type="checkbox"] {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 18px; /* Same size as the body checkboxes */
-    height: 18px; /* Same height as body checkboxes */
-    margin: auto;
-  }
-
-  tr:hover {
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-      rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-  }
-
-  /* Highlight row when checkbox is selected */
-  .selected-row {
-    background-color: #4bcf4f82; /* Green background when row is selected */
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
-      rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-  }
-
-  /* Optional: Control specific column width if necessary */
-  th:nth-child(1),
-  td:nth-child(1) {
-    width: 20%; /* Example for controlling first column */
-  }
-  th:nth-child(2),
-  td:nth-child(2) {
-    width: 30%; /* Example for controlling second column */
-  }
+}
+.table-container table {
+  width: 100%;
+  margin: auto;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.table-container th {
+  background: var(--accent-color);
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+}
+.table-container td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.9rem;
+  text-align: center;
+  vertical-align: middle;
+}
+.table-container td input[type="checkbox"],
+.table-container td .show-data-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+}
+.table-container input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  position: relative;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.table-container input[type="checkbox"]:checked {
+  background-color: #4caf50;
+  border-color: #4caf50;
+  transform: scale(1.1);
+}
+.table-container input[type="checkbox"]:checked::after {
+  content: "✔";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+}
+.table-container td input[type="checkbox"],
+.table-container th input[type="checkbox"] {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  margin: auto;
+}
+.table-container tr:hover {
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.table-container .selected-row {
+  background-color: #4bcf4f82;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+.table-container th:nth-child(1),
+.table-container td:nth-child(1) {
+  width: 20%;
+}
+.table-container th:nth-child(2),
+.table-container td:nth-child(2) {
+  width: 30%;
 }
 
 /* Year Buttons */
@@ -229,7 +210,6 @@ body {
   align-items: center;
   transition: background-color 0.3s, transform 0.2s;
 }
-
 .btn-tertiary:hover {
   background-color: #ff7f00;
   transform: scale(1.08);

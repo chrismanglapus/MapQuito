@@ -1,7 +1,7 @@
 <?php
 require('main/session_users.php');
 include('phps/php__barangay_data.php')
-?>
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,12 +26,15 @@ include('phps/php__barangay_data.php')
 
         <!-- ✅ Sticky Delete Button Container (NOW INSIDE FORM) -->
         <div class="sticky-container">
-            <button type="button" class="back-btn" onclick="backBtn('<?php echo $year; ?>')">
-                <span class="text">Back</span>
-            </button>
+            <button type="button" class="back-btn" onclick="backBtn('<?php echo $year; ?>')">Back</button>
             <input type="hidden" name="year" value="<?php echo $year; ?>">
             <!-- Display the total cases -->
-            <span>Total Cases: <?php echo number_format($total_cases ?? 0); ?></span>
+            <span class="total-cases-label">
+                Total Cases:
+                <strong class="total-cases-number <?php echo ($total_cases > 0) ? 'has-cases' : 'zero-cases'; ?>">
+                    <?php echo number_format($total_cases ?? 0); ?>
+                </strong>
+            </span>
         </div>
 
         <!-- ✅ Table Section -->
@@ -82,18 +85,21 @@ include('phps/php__barangay_data.php')
                 <!-- Edit Modal Overlay -->
                 <div class="modal-overlay"></div>
 
-                <div id="edit-modal" class="edit-modal-card" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+                <div id="edit-modal" class="edit-modal-card"
+                    style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
                     <div class="edit-modal-header">
                         <div class="edit-image">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5"
+                                <path stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"
+                                    stroke-width="1.5"
                                     d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z">
                                 </path>
                             </svg>
                         </div>
                     </div>
                     <div class="edit-modal-content">
-                        <span class="edit-modal-title" id="edit-modal-title">Editing Week </span> <!-- Title updated dynamically -->
+                        <span class="edit-modal-title" id="edit-modal-title">Editing Week </span>
+                        <!-- Title updated dynamically -->
                         <form id="edit-form">
                             <input type="hidden" name="case_id" id="edit-case-id">
 
@@ -107,7 +113,9 @@ include('phps/php__barangay_data.php')
                 </div>
 
                 <!-- Background Overlay -->
-                <div id="edit-modal-overlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
+                <div id="edit-modal-overlay"
+                    style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;">
+                </div>
 
             </div>
 

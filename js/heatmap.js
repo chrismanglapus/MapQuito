@@ -227,6 +227,7 @@ function initMap() {
     .then((response) => response.json())
     .then((data) => {
       console.log("Fetched prediction data:", data); // ✅ Add this
+      console.log("Server Logs:", data.logs); // This will show the logs in the browser console
       document.querySelector(".predict-graph").innerHTML =
         '<canvas id="predictChart" class="predict-chart-canvas"></canvas>';
         if (data?.status === "success" && data.predictions) {
