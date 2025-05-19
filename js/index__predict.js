@@ -6,8 +6,18 @@ function showPredictionGraph(barangayName, historicalData, predictionData) {
     window.predictChartInstance.destroy();
   }
 
-  const histWeeks = historicalData.map((d) => parseInt(d.morbidity_week));
-  const histCases = historicalData.map((d) => d.cases);
+  // Get current year - adjust if your data uses a different year field or format
+  const currentYear = new Date().getFullYear();
+
+  // Filter historical data for current year only
+  // Adjust 'year' or 'YEAR' depending on your data field name
+  const filteredHistorical = historicalData.filter((d) => {
+    const yr = d.year || d.YEAR;
+    return yr === currentYear || yr === currentYear - 1;
+  });
+
+  const histWeeks = filteredHistorical.map((d) => parseInt(d.morbidity_week));
+  const histCases = filteredHistorical.map((d) => d.cases);
 
   const predWeeks = predictionData.map((d) => parseInt(d.morbidity_week));
   const predCases = predictionData.map((d) => d.predicted_cases);
@@ -15,26 +25,42 @@ function showPredictionGraph(barangayName, historicalData, predictionData) {
     d.actual_cases !== undefined ? d.actual_cases : null
   );
 
-  const predStartWeek = predWeeks.length > 0 ? parseInt(predWeeks[0]) : null;
+  const predStartWeek = predWeeks.length > 0 ? predWeeks[0] : null;
   if (!predStartWeek) return;
 
-  const selectedWeek = predStartWeek - 1;
+  // Use predStartWeek directly as selectedWeek (no subtract 1)
+  const highlightWeek = predStartWeek - 1 === 0 ? 52 : predStartWeek - 1;
 
-  // Enforce strict range without wraparound
-  const startWeek = Math.max(selectedWeek - 5, 1);
-  const endWeek = Math.min(selectedWeek + 5, 52);
+  const weeksInYear = 53;
+
+  let startWeek = selectedWeek - 5;
+  let endWeek = selectedWeek + 5;
 
   const allWeeks = [];
-  for (let w = startWeek; w <= endWeek; w++) {
-    allWeeks.push(w);
+
+  for (let i = startWeek; i <= endWeek; i++) {
+    // Prevent wraparound for week 1 and week 52
+    if (selectedWeek === 1 && i < 1) continue;
+    if (selectedWeek === 52 && i > 52) continue;
+
+    let week = i;
+    if (week < 1 || week > weeksInYear) continue; // additional safeguard
+
+    allWeeks.push(week);
   }
 
-  // Filter data strictly within range
+  console.log("Historical weeks:", histWeeks);
+  console.log("Prediction weeks:", predWeeks);
+  console.log("Selected Week:", selectedWeek);
+  console.log("Weeks Range:", allWeeks);
+
+  // Map combined data: use historical data if available for that week,
+  // else use actual predicted cases if available
   const allCasesCombined = allWeeks.map((w) => {
     const histIndex = histWeeks.findIndex((hw) => hw === w);
     const predIndex = predWeeks.findIndex((pw) => pw === w);
 
-    if (histIndex !== -1) {
+    if (histIndex !== -1 && histCases[histIndex] != null) {
       return histCases[histIndex];
     } else if (predIndex !== -1 && actualPredCases[predIndex] !== null) {
       return actualPredCases[predIndex];
@@ -43,12 +69,17 @@ function showPredictionGraph(barangayName, historicalData, predictionData) {
     }
   });
 
+  // Predicted cases for all weeks (null if no prediction)
   const allCasesPredicted = allWeeks.map((w) => {
     const predIndex = predWeeks.findIndex((pw) => pw === w);
     return predIndex !== -1 ? predCases[predIndex] : null;
   });
 
-  const chartTitle = `5-Week Forecast: Trends from Week ${startWeek} to Week ${endWeek}`;
+  const highlightIndex = allWeeks.findIndex((w) => w === highlightWeek);
+
+  const chartTitle = `5-Week Forecast: Trends from Week ${
+    allWeeks[0]
+  } to Week ${allWeeks[allWeeks.length - 1]}`;
 
   window.predictChartInstance = new Chart(ctx, {
     type: "line",
@@ -100,10 +131,10 @@ function showPredictionGraph(barangayName, historicalData, predictionData) {
         },
         annotation: {
           annotations: {
-            highlightPredictionWeek: {
+            highlightBeforePrediction: {
               type: "box",
-              xMin: allWeeks.indexOf(selectedWeek) - 0.5,
-              xMax: allWeeks.indexOf(selectedWeek) + 0.5,
+              xMin: highlightIndex - 0.5,
+              xMax: highlightIndex + 0.5,
               backgroundColor: "rgba(0, 132, 255, 0.19)",
               borderWidth: 0,
             },
