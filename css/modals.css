@@ -1,3 +1,6 @@
+/* ====================================================================================
+  ===========================CTA INFORMATION MODAL=================================
+  =======================================================================================*/
 
 /* Modal Styling */
 .cta-modal {
@@ -20,7 +23,8 @@
   background: white;
   padding: 20px;
   border-radius: 10px;
-  width: 400px;
+  width: 600px;
+  height: auto;
   text-align: center;
   position: absolute;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -47,6 +51,12 @@
 .close-btn:hover {
   background: darkred;
 }
+
+.cta-modal-content h3,
+.cta-modal-content p {
+  margin-bottom: 16px;
+}
+
 
 /* ====================================================================================
   ===========================BARANGAY INFORMATION MODAL=================================

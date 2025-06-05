@@ -183,6 +183,23 @@ document.addEventListener("DOMContentLoaded", function () {
           axis: "x", // Tracks only along the X-axis
           intersect: false, // Allows tooltip to show even when not directly on a point
         },
+        onClick: (evt, activeElements) => {
+          console.log("Chart clicked", activeElements);
+          if (activeElements.length > 0) {
+            const dataIndex = activeElements[0].index;
+            const weekClicked = dataIndex + 1;
+            console.log(`Redirect to week ${weekClicked} of year ${selectedYear}`);
+            window.location.href = `http://localhost/mapquito/index.php?selected_year=${selectedYear}&selected_week=${weekClicked}`;
+          }
+        },   
+        onHover: (evt, activeElements) => {
+          const canvas = evt.native.target;
+          if (activeElements.length > 0) {
+            canvas.style.cursor = 'pointer';
+          } else {
+            canvas.style.cursor = 'default';
+          }
+        },     
         plugins: {
           legend: {
             display: true,
@@ -316,3 +333,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+

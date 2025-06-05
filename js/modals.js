@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const currentWeek = parseInt(document.getElementById("selectedWeek").value);
       const currentCases = totalCasesYearData[selectedYear]?.[currentWeek] || 0;
       const message = checkDengueRisk(selectedYear, currentWeek, currentCases);
-      document.getElementById("modal-text").innerText = message;
+      document.getElementById("modal-text").innerHTML = message;
     }
   
     ctaButton.addEventListener("click", function () {
