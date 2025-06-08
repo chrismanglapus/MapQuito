@@ -52,8 +52,9 @@ if (isset($_GET['barangay'], $_GET['year'], $_GET['week'])) {
     $historicalCurrentYear = fetchHistoricalData($conn, $barangay, $year, $startWeek, $selectedWeek, $qHist);
     $historicalPrevYear = fetchHistoricalData($conn, $barangay, $year - 1, $startWeek, $selectedWeek, $qHist);
 
-    // Merge historical data for frontend (your frontend can differentiate by 'year' field)
     $historical = array_merge($historicalPrevYear, $historicalCurrentYear);
+
+    $flatHistorical = array_merge($historicalPrevYear, $historicalCurrentYear);
 
     $predictions = [];
 
@@ -196,6 +197,7 @@ if (isset($_GET['barangay'], $_GET['year'], $_GET['week'])) {
     echo json_encode([
         'status' => 'success',
         'historical' => $historical,
+        'flat_historical' => $flatHistorical,
         'predictions' => $predictions,
         'logs' => $logs
     ]);

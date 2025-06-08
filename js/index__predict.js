@@ -1,4 +1,10 @@
-function showPredictionGraph(barangayName, historicalData, predictionData) {
+function showPredictionGraph(
+  barangayName,
+  historicalData,
+  predictionData,
+  selectedWeek = null,
+  selectedYear = null
+) {
   const canvas = document.getElementById("predictChart");
   const ctx = canvas.getContext("2d");
 
@@ -6,18 +12,52 @@ function showPredictionGraph(barangayName, historicalData, predictionData) {
     window.predictChartInstance.destroy();
   }
 
-  // Get current year - adjust if your data uses a different year field or format
-  const currentYear = new Date().getFullYear();
+  // Parse historicalData if it's a JSON string
+  if (typeof historicalData === "string") {
+    try {
+      historicalData = JSON.parse(historicalData);
+    } catch (err) {
+      console.error("Failed to parse historicalData:", err);
+      return;
+    }
+  }
 
-  // Filter historical data for current year only
-  // Adjust 'year' or 'YEAR' depending on your data field name
-  const filteredHistorical = historicalData.filter((d) => {
-    const yr = d.year || d.YEAR;
-    return yr === currentYear || yr === currentYear - 1;
+  if (!Array.isArray(historicalData)) {
+    console.error("historicalData must be an array");
+    return;
+  }
+
+  if (!Array.isArray(predictionData)) {
+    console.error("predictionData must be an array");
+    return;
+  }
+
+  const yearBase = Number(selectedYear || new Date().getFullYear());
+  const yearsToShow = [yearBase, yearBase - 1, yearBase - 2];
+
+  console.log(
+    "Sample historicalData entries years:",
+    historicalData.slice(0, 10).map((d) => d.year || d.YEAR)
+  );
+
+  let filteredHistorical = historicalData.filter((d) => {
+    const yr = Number(d.year || d.YEAR);
+    return yr === yearBase;
   });
 
-  const histWeeks = filteredHistorical.map((d) => parseInt(d.morbidity_week));
-  const histCases = filteredHistorical.map((d) => d.cases);
+  const histMap = {};
+  filteredHistorical.forEach((d) => {
+    const year = d.year || d.YEAR;
+    const week = parseInt(d.morbidity_week);
+    const key = `${year}-${week}`;
+    histMap[key] = d.cases;
+  });
+
+  console.log("Selected year:", yearBase);
+  console.log("Years to show:", yearsToShow);
+  console.log("Filtered historical data count:", filteredHistorical.length);
+  console.log("Filtered historical sample:", filteredHistorical.slice(0, 3));
+  console.log("Historical Map keys sample:", Object.keys(histMap).slice(0, 5));
 
   const predWeeks = predictionData.map((d) => parseInt(d.morbidity_week));
   const predCases = predictionData.map((d) => d.predicted_cases);
@@ -28,48 +68,83 @@ function showPredictionGraph(barangayName, historicalData, predictionData) {
   const predStartWeek = predWeeks.length > 0 ? predWeeks[0] : null;
   if (!predStartWeek) return;
 
-  // Use predStartWeek directly as selectedWeek (no subtract 1)
   const highlightWeek = predStartWeek - 1 === 0 ? 52 : predStartWeek - 1;
 
   const weeksInYear = 53;
 
-  let startWeek = selectedWeek - 5;
-  let endWeek = selectedWeek + 5;
+  // Estimate selectedWeek if not passed
+  if (!selectedWeek) selectedWeek = highlightWeek;
+
+  // --- NEW: Determine last week with actual data ---
+
+  // Historical weeks with data (for selected year and previous years)
+  const historicalWeeksWithData = filteredHistorical
+    .filter((d) => d.cases != null && d.cases !== "")
+    .map((d) => parseInt(d.morbidity_week));
+
+  // Predicted weeks with data
+  const predictionWeeksWithData = predictionData
+    .filter((d) => d.predicted_cases != null && d.predicted_cases !== "")
+    .map((d) => parseInt(d.morbidity_week));
+
+  // Calculate max weeks from historical and prediction data
+  const maxHistWeek = historicalWeeksWithData.length
+    ? Math.max(...historicalWeeksWithData)
+    : 0;
+  const maxPredWeek = predictionWeeksWithData.length
+    ? Math.max(...predictionWeeksWithData)
+    : 0;
+
+  const lastDataWeek = Math.max(maxHistWeek, maxPredWeek, selectedWeek);
+
+  // Define start and end weeks for chart window (showing 10 weeks before last data week)
+  const minHistWeek = historicalWeeksWithData.length
+    ? Math.min(...historicalWeeksWithData)
+    : 1;
+
+  let startWeek = lastDataWeek - 10;
+  if (startWeek < 1) startWeek = 1;
+  if (startWeek < minHistWeek) startWeek = minHistWeek;
+
+  let endWeek = lastDataWeek;
+  if (endWeek > weeksInYear) endWeek = weeksInYear;
 
   const allWeeks = [];
-
   for (let i = startWeek; i <= endWeek; i++) {
-    // Prevent wraparound for week 1 and week 52
-    if (selectedWeek === 1 && i < 1) continue;
-    if (selectedWeek === 52 && i > 52) continue;
-
-    let week = i;
-    if (week < 1 || week > weeksInYear) continue; // additional safeguard
-
-    allWeeks.push(week);
+    allWeeks.push(i);
   }
 
-  console.log("Historical weeks:", histWeeks);
-  console.log("Prediction weeks:", predWeeks);
-  console.log("Selected Week:", selectedWeek);
-  console.log("Weeks Range:", allWeeks);
+  // Find max predicted week within current allWeeks window
+  const predWeeksInWindow = predWeeks.filter((w) => allWeeks.includes(w));
+  const maxPredWeekInWindow = predWeeksInWindow.length
+    ? Math.max(...predWeeksInWindow)
+    : predStartWeek;
 
-  // Map combined data: use historical data if available for that week,
-  // else use actual predicted cases if available
+  // Find index of predStartWeek and maxPredWeekInWindow in allWeeks
+  const predStartIndex = allWeeks.findIndex((w) => w === predStartWeek);
+  const predEndIndex = allWeeks.findIndex((w) => w === maxPredWeekInWindow);
+
+  // Combine historical and prediction data for all weeks, prioritizing selectedYear,
+  // then previous years in yearsToShow, then actual predicted cases
   const allCasesCombined = allWeeks.map((w) => {
-    const histIndex = histWeeks.findIndex((hw) => hw === w);
-    const predIndex = predWeeks.findIndex((pw) => pw === w);
+    // Try selectedYear first
+    let key = `${yearBase}-${w}`;
+    if (histMap[key] != null) return histMap[key];
 
-    if (histIndex !== -1 && histCases[histIndex] != null) {
-      return histCases[histIndex];
-    } else if (predIndex !== -1 && actualPredCases[predIndex] !== null) {
-      return actualPredCases[predIndex];
-    } else {
-      return null;
+    // Then try previous years in order
+    for (let y = 1; y < yearsToShow.length; y++) {
+      key = `${yearBase - y}-${w}`;
+      if (histMap[key] != null) return histMap[key];
     }
+
+    // Then actual cases from prediction data if available
+    const predIndex = predWeeks.findIndex((pw) => pw === w);
+    if (predIndex !== -1 && actualPredCases[predIndex] !== null)
+      return actualPredCases[predIndex];
+
+    return null;
   });
 
-  // Predicted cases for all weeks (null if no prediction)
   const allCasesPredicted = allWeeks.map((w) => {
     const predIndex = predWeeks.findIndex((pw) => pw === w);
     return predIndex !== -1 ? predCases[predIndex] : null;
@@ -77,9 +152,9 @@ function showPredictionGraph(barangayName, historicalData, predictionData) {
 
   const highlightIndex = allWeeks.findIndex((w) => w === highlightWeek);
 
-  const chartTitle = `5-Week Forecast: Trends from Week ${
-    allWeeks[0]
-  } to Week ${allWeeks[allWeeks.length - 1]}`;
+  const chartTitle = `Forecast: Trends from Week ${allWeeks[0]} to Week ${
+    allWeeks[allWeeks.length - 1]
+  } (Year ${yearBase})`;
 
   window.predictChartInstance = new Chart(ctx, {
     type: "line",
@@ -87,29 +162,40 @@ function showPredictionGraph(barangayName, historicalData, predictionData) {
       labels: allWeeks.map((w) => `Week ${w}`),
       datasets: [
         {
-          label: "Predicted",
-          data: allCasesPredicted,
-          borderColor: "rgb(33, 25, 255)",
-          borderDash: [5, 5],
-          tension: 0.1,
-          fill: false,
-          pointRadius: 6,
-          pointBackgroundColor: "rgb(33, 25, 255)",
-          cubicInterpolationMode: "monotone",
-          pointHoverRadius: 15,
-        },
-        {
           label: "Historical & Actual",
           data: allCasesCombined,
+          borderColor: "#4682b4",
+          borderWidth: 3,
+          backgroundColor: "rgba(70, 130, 180, 0.15)",
           fill: true,
-          type: "bar",
-          backgroundColor: "#00A650",
-          borderColor: "#00703C",
-          borderWidth: 1,
-          borderRadius: 5,
-          hoverBackgroundColor: "rgba(0, 132, 255, 0.37)",
-          hoverBorderColor: "rgb(0, 64, 121)",
-          hoverBorderWidth: 4,
+          cubicInterpolationMode: "monotone",
+          tension: 0.4,
+          pointRadius: 4,
+          pointStyle: "circle",
+          pointBackgroundColor: "#4682b4",
+          pointBorderColor: "#ffffff",
+          pointBorderWidth: 2,
+          pointHoverRadius: 6,
+          pointHoverBackgroundColor: "rgb(0, 64, 121)",
+          pointHoverBorderColor: "rgba(0, 132, 255, 0.37)",
+        },
+        {
+          label: "Predicted",
+          data: allCasesPredicted,
+          borderColor: "#28a745",
+          borderWidth: 5,
+          borderDash: [10, 6],
+          fill: false,
+          tension: 0.1,
+          cubicInterpolationMode: "default",
+          pointRadius: 7,
+          pointStyle: "rectRot",
+          pointBackgroundColor: "#ffffff",
+          pointBorderColor: "#28a745",
+          pointBorderWidth: 3,
+          pointHoverRadius: 9,
+          pointHoverBackgroundColor: "#28a745",
+          pointHoverBorderColor: "#ffffff",
         },
       ],
     },
@@ -137,6 +223,24 @@ function showPredictionGraph(barangayName, historicalData, predictionData) {
               xMax: highlightIndex + 0.5,
               backgroundColor: "rgba(0, 132, 255, 0.19)",
               borderWidth: 0,
+            },
+            predictedRangeBox: {
+              type: "box",
+              xMin: predStartIndex - 0.5,
+              xMax: predEndIndex + 0.5,
+              backgroundColor: "rgba(40, 167, 69, 0.08)",
+              borderWidth: 0,
+              label: {
+                enabled: true,
+                content: "Predicted Range",
+                position: "start",
+                backgroundColor: "rgba(40, 167, 69, 0.4)",
+                color: "#fff",
+                font: {
+                  weight: "bold",
+                  size: 10,
+                },
+              },
             },
           },
         },

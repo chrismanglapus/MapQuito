@@ -8,20 +8,20 @@ var maxValue = Math.max(
 );
 
 function getSeverityColor({
-  total_cases = 0,
-  alert_threshold_count = 0,
-  epidemic_threshold_count = 0,
+  rate = 0,
+  alert_threshold = 0,
+  epidemic_threshold = 0,
 }) {
   let fillColor;
   const strokeColor = "rgba(75, 75, 75, 0.5)";
 
-  if (total_cases === 0) {
+  if (rate === 0) {
     fillColor = "rgba(255, 255, 255, 0.2)"; // No cases: white
-  } else if (epidemic_threshold_count === 0 && alert_threshold_count === 0) {
+  } else if (epidemic_threshold === 0 && alert_threshold === 0) {
     fillColor = "rgba(107, 114, 128, 0.2)"; // Data unavailable: gray
-  } else if (total_cases >= epidemic_threshold_count && epidemic_threshold_count > 0) {
+  } else if (rate >= epidemic_threshold && epidemic_threshold > 0) {
     fillColor = "rgba(220, 38, 38, 0.4)"; // Epidemic: red
-  } else if (total_cases >= alert_threshold_count && alert_threshold_count > 0) {
+  } else if (rate >= alert_threshold && alert_threshold > 0) {
     fillColor = "rgba(245, 158, 11, 0.3)"; // Alert: yellow
   } else {
     fillColor = "rgba(22, 163, 74, 0.3)"; // Low risk: green
@@ -217,29 +217,80 @@ function initMap() {
 
     info1.innerHTML = info2.innerHTML = info3.innerHTML = "";
 
-    gridTitle.innerHTML = `<h2>Barangay ${barangayName}</h2><p>Year ${selectedYear}</p><p>Week ${selectedWeek}</p>`;
-    info1.innerHTML = `<span>Cases in Week ${selectedWeek}</span><h1>${barangayData.total_cases}</h1>`;
-    info2.innerHTML = `<span>Cases in ${selectedYear}</span><h1>${totalCasesYearData[barangayName] || 0
-      }</h1>`;
+    fetch("phps/get_population.php")
+      .then((response) => response.json())
+      .then((popData) => {
+        const popCount = popData[barangayName];
+        const populationInfo = popCount ? `<p>Population: ${popCount}</p>` : "";
 
-    // Fetch Predictions
-    fetch(`index__fetch_prediction_data.php?barangay=${barangayName}&year=${selectedYear}&week=${selectedWeek}`)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Fetched prediction data:", data); // ✅ Add this
-      console.log("Server Logs:", data.logs); // This will show the logs in the browser console
-      document.querySelector(".predict-graph").innerHTML =
-        '<canvas id="predictChart" class="predict-chart-canvas"></canvas>';
-        if (data?.status === "success" && data.predictions) {
+        gridTitle.innerHTML = `
+        <section aria-label="Information about Barangay ${barangayName}">
+          <h2>Barangay ${barangayName}</h2>
+          <div class="grid-title-sub">
+            <p>Year ${selectedYear} | Week ${selectedWeek}</p>
+            ${populationInfo}
+          </div>
+        </section>
+      `;
+      })
+      .catch((error) => {
+        console.error("Population fetch error:", error);
+
+        // Fallback: Show grid title without population
+        gridTitle.innerHTML = `
+          <h2>Barangay ${barangayName}</h2>
+          <div class="grid-title-sub">
+            <p>Year ${selectedYear}</p>
+            <p>Week ${selectedWeek}</p>
+          </div>
+        `;
+      });
+
+    info1.innerHTML = `<span>Cases in Week ${selectedWeek}</span><h1>${barangayData.total_cases}</h1>`;
+    info2.innerHTML = `<span>Cases in ${selectedYear}</span><h1>${
+      totalCasesYearData[barangayName] || 0
+    }</h1>`;
+
+    fetch(
+      `index__fetch_prediction_data.php?barangay=${barangayName}&year=${selectedYear}&week=${selectedWeek}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        document.querySelector(".predict-graph").innerHTML =
+          '<canvas id="predictChart" class="predict-chart-canvas"></canvas>';
+
+        if (data?.status === "success") {
+          if (!Array.isArray(data.predictions)) {
+            console.error("Prediction data is not an array:", data.predictions);
+            return;
+          }
+
+          if (!Array.isArray(data.historical)) {
+            console.error("Historical data is not an array:", data.historical);
+            return;
+          }
+
+          const historicalArray =
+            data.flat_historical || Object.values(data.historical).flat();
+
+          // Pass selectedYear explicitly as the 4th parameter
           showPredictionGraph(
             barangayName,
-            data.historical,
+            historicalArray,
             data.predictions,
+            selectedWeek,
+            selectedYear
           );
-        }        
-    });
-  
-    // First fetch: Get dengue threshold data for preventive measures
+        } else {
+          console.warn(
+            "Prediction fetch failed or returned unexpected format."
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+
     fetch(
       `api_heatmap.php?selected_year=${selectedYear}&selected_week=${selectedWeek}`
     )
@@ -247,79 +298,100 @@ function initMap() {
       .then((data) => {
         const barangayData = data.casesData[barangayName];
 
-        // --- Update Preventive Measures ---
-        if (barangayData) {
-          // Extract both the rate and the count thresholds from barangayData
-          const {
-            total_cases: cases,
-            rate,
-            alert_threshold, // rate-based threshold (cases per 1,000)
-            epidemic_threshold, // rate-based threshold (cases per 1,000)
-            alert_threshold_count, // actual threshold in cases
-            epidemic_threshold_count, // actual threshold in cases
-          } = barangayData;
-          let preventionMessage = "";
-
-          if (rate === 0) {
-            preventionMessage = `
-            <h3 style="color: #6b7280;">🧐 Data Unavailable</h3>
-            <p>Currently, there is insufficient data to assess the dengue risk level for this barangay.</p>
-            <p><strong>What You Can Do:</strong></p>
-            <ul style="text-align: left; padding-left: 20px; list-style-type: disc; margin-top: 8px;">
-              <li>📊 Stay updated on dengue risk levels.</li>
-              <li>📢 Maintain cleanliness to prevent mosquito breeding.</li>
-              <li>🕵️ Monitor and report any suspected dengue cases.</li>
-            </ul>
-          `;
-          } else if (
-            cases >= epidemic_threshold_count &&
-            epidemic_threshold_count > 0
-          ) {
-            preventionMessage = `
-            <h3 style="color: #dc2626;">🚨 Dengue Epidemic Alert!</h3>
-            <p>This barangay has reported <strong>${cases}</strong> cases, surpassing the epidemic threshold (<strong>${epidemic_threshold_count}</strong> cases).</p>
-            <p><strong>Immediate Actions Required:</strong></p>
-            <ul style="text-align: left; padding-left: 20px; list-style-type: disc; margin-top: 8px;">
-              <li>🔴 Implement urgent mosquito control measures, including fogging and spraying.</li>
-              <li>🔴 Conduct barangay-wide cleanup operations to eliminate breeding sites.</li>
-              <li>🔴 Strengthen surveillance and early case detection.</li>
-              <li>🔴 Advise residents to seek medical attention at the first sign of symptoms.</li>
-            </ul>
-          `;
-          } else if (
-            cases >= alert_threshold_count &&
-            alert_threshold_count > 0
-          ) {
-            preventionMessage = `
-            <h3 style="color: #f59e0b;">⚠️ Dengue Alert Level</h3>
-            <p>This barangay has recorded <strong>${cases}</strong> cases, reaching the alert threshold (<strong>${alert_threshold_count}</strong> cases).</p>
-            <p><strong>Recommended Preventive Actions:</strong></p>
-            <ul style="text-align: left; padding-left: 20px; list-style-type: disc; margin-top: 8px;">
-              <li>🟠 Strengthen mosquito control efforts (remove stagnant water, apply larvicides).</li>
-              <li>🟠 Conduct awareness campaigns on dengue prevention.</li>
-              <li>🟠 Encourage timely reporting of new cases to health officials.</li>
-              <li>🟠 Promote the use of mosquito nets and repellents among residents.</li>
-            </ul>
-          `;
-          } else {
-            preventionMessage = `
-            <h3 style="color: #16a34a;">✅ Dengue Risk Low</h3>
-            <p>This barangay has reported <strong>${cases}</strong> cases, which remains below the alert threshold (<strong>${alert_threshold_count}</strong> cases).</p>
-            <p><strong>Ongoing Preventive Measures:</strong></p>
-            <ul style="text-align: left; padding-left: 20px; list-style-type: disc; margin-top: 8px;">
-              <li>✅ Regularly inspect and clean water storage areas.</li>
-              <li>✅ Encourage residents to wear protective clothing and apply mosquito repellent.</li>
-              <li>✅ Foster community involvement in sanitation efforts.</li>
-            </ul>
-          `;
-          }
-
-          info3.innerHTML = `<div class="prevention-message" style="padding: 1em; border-radius: 8px;">${preventionMessage}</div>`;
-        } else {
+        if (!barangayData) {
           info3.innerHTML = `<span>Threshold data not available</span>`;
+          return;
         }
 
-        return fetch(`index__fetch_trend_data.php?barangay=${barangayName}&year=${selectedYear}`)
+        const {
+          total_cases: cases,
+          alert_threshold_rate,
+          epidemic_threshold_rate,
+          rate,
+        } = barangayData;
+
+        let preventionMessage = "";
+
+        if (cases === 0) {
+          preventionMessage = `
+            <h3 style="color: #2563eb; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              🛡️ No Dengue Cases
+            </h3>
+            <p>No dengue cases have been reported in this barangay this week.</p>
+            <p><strong>Preventive Reminders:</strong></p>
+            <ul style="text-align: left; padding-left: 20px; list-style-type: none;">
+              <li style="margin-bottom: 6px;">🛡️ Keep surroundings clean and dry to prevent mosquito breeding.</li>
+              <li style="margin-bottom: 6px;">🛡️ Encourage residents to use mosquito repellent and nets.</li>
+              <li>🛡️ Monitor symptoms and seek medical help if needed.</li>
+            </ul>
+          `;
+        } else if (
+          rate >= epidemic_threshold_rate &&
+          epidemic_threshold_rate > 0
+        ) {
+          preventionMessage = `
+            <h3 style="color: #dc2626; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              🚨 Dengue Epidemic Alert!
+            </h3>
+            <p>Surpassing the epidemic threshold of <strong>${epidemic_threshold_rate}</strong> cases per 1,000 population.</p>
+            <br>
+            <p><strong>Immediate Actions Required:</strong></p>
+            <ul style="text-align: left; padding-left: 20px; list-style-type: none;">
+              <li style="margin-bottom: 6px;">🔴 Launch emergency mosquito control operations, including fogging.</li>
+              <li style="margin-bottom: 6px;">🔴 Urge residents to seek medical attention for any dengue-like symptoms.</li>
+              <li style="margin-bottom: 6px;">🔴 Enforce barangay-level inspections and cleanup campaigns.</li>
+              <li>🔴 Mobilize health workers to monitor and contain outbreaks.</li>
+            </ul>
+          `;
+        } else if (rate >= alert_threshold_rate && alert_threshold_rate > 0) {
+          preventionMessage = `
+            <h3 style="color: #f59e0b; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              ⚠️ Dengue Alert Level
+            </h3>
+            <p>Reached the alert threshold of <strong>${alert_threshold_rate}</strong> cases per 1,000 population.</p>
+            <br>
+            <p><strong>Suggested Preventive Actions:</strong></p>
+            <ul style="text-align: left; padding-left: 20px; list-style-type: none;">
+              <li style="margin-bottom: 6px;">🟠 Intensify clean-up drives in all communities.</li>
+              <li style="margin-bottom: 6px;">🟠 Conduct public awareness campaigns on dengue symptoms and prevention.</li>
+              <li style="margin-bottom: 6px;">🟠 Report any suspected dengue cases promptly.</li>
+              <li>🟠 Promote the use of mosquito nets and repellents across all barangays.</li>
+            </ul>
+          `;
+        } else if (rate === 0 && cases > 0) {
+          preventionMessage = `
+            <h3 style="color: #6b7280; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              🧐 Data Unavailable
+            </h3>
+            <p>There are dengue cases, but the rate data is missing or could not be computed.</p>
+            <p><strong>Suggested Actions:</strong></p>
+            <ul style="text-align: left; padding-left: 20px; list-style-type: none;">
+              <li style="margin-bottom: 6px;">📊 Monitor for any increase in dengue symptoms locally.</li>
+              <li style="margin-bottom: 6px;">📢 Maintain preventive practices to keep risk low.</li>
+              <li>🕵️ Encourage reporting of suspected dengue cases.</li>
+            </ul>
+          `;
+        } else {
+          preventionMessage = `
+            <h3 style="color: #16a34a; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              ✅ Dengue Risk Low
+            </h3>
+            <p>Below the alert threshold of <strong>${alert_threshold_rate}</strong> cases per 1,000 population.</p>
+            <br>
+            <p><strong>Keep up with these preventive measures:</strong></p>
+            <ul style="text-align: left; padding-left: 20px; list-style-type: none;">
+              <li style="margin-bottom: 6px;">✅ Dispose of containers that collect water (e.g., tires, buckets).</li>
+              <li style="margin-bottom: 6px;">✅ Wear protective clothing and apply insect repellent.</li>
+              <li>✅ Encourage community involvement in sanitation efforts.</li>
+            </ul>
+          `;
+        }
+
+        info3.innerHTML = `<div class="prevention-message" style="padding: 1em; border-radius: 8px;">${preventionMessage}</div>`;
+
+        return fetch(
+          `index__fetch_trend_data.php?barangay=${barangayName}&year=${selectedYear}`
+        );
       })
       .then((response) => response.json())
       .then((trendData) => {

@@ -1,4 +1,5 @@
 <?php
+
 $barangay_population = [
     'ABUT' => 539,
     'APALENG' => 494,

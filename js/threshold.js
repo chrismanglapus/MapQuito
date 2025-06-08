@@ -102,24 +102,6 @@ function checkDengueRisk(selectedYear, selectedWeek) {
       ">${count}</span>`;
   }
 
-  // Helper function for progress bar
-  function progressBar(current, max, color) {
-    const percentage = Math.min((current / max) * 100, 100);
-    return `
-        <div style="background: #e5e7eb; border-radius: 10px; overflow: hidden; margin: 12px 0;">
-          <div style="
-            width: ${percentage}%;
-            background-color: ${color}; 
-            height: 12px; 
-            border-radius: 10px;">
-          </div>
-        </div>
-        <p style="font-size: 0.9em; color: #555;">
-          Progress toward threshold (${max} cases)
-        </p>
-      `;
-  }
-
   if (selectedYear < 2021 || !thresholds) {
     preventionMessage = `
         <h3 style="color: #6b7280; display: flex; align-items: center; justify-content: center; gap: 8px;">
@@ -176,7 +158,6 @@ function checkDengueRisk(selectedYear, selectedWeek) {
           <li style="margin-bottom: 6px;">✅ Wear protective clothing and apply insect repellent.</li>
           <li>✅ Encourage community involvement in sanitation efforts.</li>
         </ul>
-        ${progressBar(currentCases, thresholds.alertThreshold, "#16a34a")}
       `;
   } else if (
     currentCases >= thresholds.alertThreshold &&
@@ -210,7 +191,6 @@ function checkDengueRisk(selectedYear, selectedWeek) {
           <li style="margin-bottom: 6px;">🟠 Report any suspected dengue cases promptly.</li>
           <li>🟠 Promote the use of mosquito nets and repellents across all barangays.</li>
         </ul>
-        ${progressBar(currentCases, thresholds.epidemicThreshold, "#f59e0b")}
       `;
   } else {
     preventionMessage = `
@@ -241,7 +221,6 @@ function checkDengueRisk(selectedYear, selectedWeek) {
           <li style="margin-bottom: 6px;">🔴 Enforce barangay-level inspections and cleanup campaigns.</li>
           <li>🔴 Mobilize health workers to monitor and contain outbreaks.</li>
         </ul>
-        ${progressBar(currentCases, thresholds.epidemicThreshold, "#dc2626")}
       `;
   }
 

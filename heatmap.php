@@ -138,7 +138,6 @@ include('phps/data__heatmap.php');
     var totalCasesYearData = <?= $totalCasesYearDataJS ?>;
 </script>
 
-
 <!-- Custom Scripts -->
 <script src="js/index__trend.js" defer></script>
 <script src="js/index__predict.js" defer></script>

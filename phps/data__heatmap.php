@@ -78,7 +78,6 @@ while ($row = mysqli_fetch_assoc($casesResult)) {
 
     $historical_rates = [];
     while ($historyRow = mysqli_fetch_assoc($historyResult)) {
-        // Calculate rate per 1,000 population
         $historical_rates[] = ($historyRow['total_cases'] / $population) * 1000;
     }
 
@@ -95,40 +94,24 @@ while ($row = mysqli_fetch_assoc($casesResult)) {
         $std_dev = sqrt($sum_squared_diff / (count($historical_rates) - 1));
     }
 
-    // Set a minimum standard deviation to prevent extremely low thresholds
+    // Optional: Ensure a minimum SD to avoid overly tight thresholds
     $min_std_dev = max(0.5, $mean_rate * 0.3);
     if ($std_dev < $min_std_dev) {
         $std_dev = $min_std_dev;
     }
 
-    // Convert fallback thresholds into rate units (cases per 1,000 population)
-    $alert_fallback_rate = ($population > 0)
-        ? (ceil(0.001 * $population) / $population) * 1000
-        : 0;
-    $epidemic_fallback_rate = ($population > 0)
-        ? (ceil(0.002 * $population) / $population) * 1000
-        : 0;
+    // Compute thresholds (rates only)
+    $alert_threshold = round($mean_rate + $std_dev, 2);
+    $epidemic_threshold = round($mean_rate + 2 * $std_dev, 2);
 
-    // Compute thresholds dynamically in rate units
-    $alert_threshold = round($mean_rate + $std_dev);
-    $alert_threshold = max($alert_threshold, $alert_fallback_rate);
-
-    $epidemic_threshold = round($mean_rate + 2 * $std_dev);
-    $epidemic_threshold = max($epidemic_threshold, $epidemic_fallback_rate);
-
-    // Ensure epidemic threshold is at least one unit (in rate) higher than alert threshold:
     if ($epidemic_threshold <= $alert_threshold) {
         $epidemic_threshold = $alert_threshold + 1;
     }
 
-    // Convert thresholds (in rate) into actual case counts (per week) for display in preventive measures:
-    $alert_threshold_count = round(($alert_threshold / 1000) * $population);
-    $epidemic_threshold_count = round(($epidemic_threshold / 1000) * $population);
-
-    // Compute current rate:
+    // Compute current rate
     $current_rate = ($cases / $population) * 1000;
 
-    // Determine status using the rate
+    // Determine status
     $status = 'Below Threshold';
     if ($current_rate >= $epidemic_threshold) {
         $status = 'Epidemic';
@@ -136,17 +119,17 @@ while ($row = mysqli_fetch_assoc($casesResult)) {
         $status = 'Alert';
     }
 
-    // Store data, including both rate thresholds and count thresholds:
+    // Store data
     $casesData[$barangay] = [
         'total_cases' => $cases,
         'population' => $population,
         'rate' => round($current_rate, 2),
-        'alert_threshold' => $alert_threshold,             // threshold in rate (cases per 1,000)
-        'epidemic_threshold' => $epidemic_threshold,         // threshold in rate (cases per 1,000)
-        'alert_threshold_count' => $alert_threshold_count,   // threshold in actual cases
-        'epidemic_threshold_count' => $epidemic_threshold_count, // threshold in actual cases
+        'alert_threshold' => $alert_threshold,
+        'epidemic_threshold' => $epidemic_threshold,
         'mean_rate_per_1000' => round($mean_rate, 2),
         'std_dev' => round($std_dev, 2),
+        'min_rate' => count($historical_rates) ? round(min($historical_rates), 2) : 0,
+        'max_rate' => count($historical_rates) ? round(max($historical_rates), 2) : 0,
         'status' => $status
     ];
 }
