@@ -26,29 +26,6 @@ include('phps/php__settings.php')
 
             <form method="post" action="settings.php" enctype="multipart/form-data">
 
-                <div class="settings__profile-picture">
-
-                    <figure class="profile-picture">
-                        <img src="<?php echo htmlspecialchars($_SESSION['profile_picture_path']); ?>" alt="Profile Picture" id="profilePreview">
-                    </figure>
-                    <!-- Modal for image preview -->
-                    <div id="imageModal" class="image-modal">
-                        <span class="close-modal">&times;</span>
-                        <img class="modal-content" id="modalImage">
-                    </div>
-
-                    <div class="file__upload">
-                        <label for="upload_profile_picture" class="upload__label">
-                            <span class="file_upload-text">Upload Profile Picture</span>
-                            <input type="file" name="profile_picture" id="upload_profile_picture" accept="image/*" style="display: none;">
-                        </label>
-                    </div>
-
-                    <button class="delete__profile-picture">Delete</button>
-                    <input type="hidden" name="delete_profile_picture" id="delete_profile_picture" value="0">
-
-                </div>
-
                 <input type="hidden" name="user_id" value="<?php echo isset($user["id"]) ? $user["id"] : ''; ?>">
 
                 <div class="field-group">

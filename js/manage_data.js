@@ -129,3 +129,18 @@ function addYearButton(year) {
 closeAddDataModal.addEventListener('click', () => {
     document.getElementById('uploadStatus').textContent = '';
 });
+
+const editPopulationBtn = document.getElementById('editPopulationBtn');
+const editPopulationModal = document.getElementById('editPopulationModal');
+const closeEditPopulationModal = document.getElementById('closeEditPopulationModal');
+
+// Show and hide edit population modal
+editPopulationBtn.addEventListener('click', () => showModal(editPopulationModal));
+closeEditPopulationModal.addEventListener('click', () => hideModal(editPopulationModal));
+
+// Update overlay click to include the new modal
+modalOverlay.addEventListener('click', () => {
+    if (addDataModal.style.display === 'block') hideModal(addDataModal);
+    if (exportModal.style.display === 'block') hideModal(exportModal);
+    if (editPopulationModal.style.display === 'block') hideModal(editPopulationModal);
+});

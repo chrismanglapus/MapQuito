@@ -1,12 +1,14 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 html {
   font-family: Poppins, "Segoe UI", sans-serif;
   line-height: 1.5rem;
 }
+
 body {
   overflow: hidden;
 }
@@ -28,30 +30,6 @@ body {
   width: calc(100% - 250px + 190px);
 }
 
-@media (max-width: 800px) {
-  .chart-main {
-    width: 100%;
-    height: calc(100vh - 60px);
-    padding: 0 10px;
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .chart-container {
-    width: 100%;
-    height: auto;
-    margin-bottom: 3em;
-    padding: 0;
-    box-sizing: border-box;
-
-    > h2 {
-      margin-top: none;
-      padding: none;
-      font-size: 1.5vw;
-      font-weight: none;
-    }
-  }
-}
-
 .chart-container {
   width: 100%;
   height: auto;
@@ -61,56 +39,87 @@ body {
   justify-content: center;
   margin-bottom: 1em;
   box-sizing: border-box;
-
-  #yearSelectTrend,
-  #yearSelectBar {
-    box-sizing: border-box;
-    padding: 8px;
-    margin-top: 2em;
-    width: 20%;
-    text-align: center;
-    position: sticky;
-    top: 0;
-  }
 }
+
 .chart-container h2 {
-  padding: 8px;
-  font-size: 2.5vw;
+  font-size: 2.8vw;
+  font-weight: 800;
+  color: #ff7f00;
+  text-align: center;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  display: inline-block;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.bar-chart-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  align-items: center;
+  margin: 1.5em 0;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+#yearSelectTrend,
+#yearSelectBar,
+#displayModeSelect {
+  width: 220px;
+  padding: 12px 20px;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  font-size: 1rem;
   font-weight: 600;
-  box-sizing: border-box;
+  border-radius: 30px;
+  background: linear-gradient(to right, #ffffff, #f1f1f1); /* light base */
+  color: #ff7f00; /* dark text for contrast */
+  border: 2px solid #ff7f00;
+  text-align: center;
+  text-align-last: center;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='%23ff7f00' viewBox='0 0 24 24' width='16' height='16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+#yearSelectTrend:hover,
+#yearSelectBar:hover,
+#displayModeSelect:hover {
+  background: linear-gradient(to right, #ffe0b2, #ffcc80); /* orange theme gradient */
+  box-shadow: 0 8px 24px rgba(255, 127, 0, 0.3);
+  cursor: pointer;
 }
 
 .trendChart-container {
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: 100%;
-  max-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1em;
-  padding: 4em;
   box-sizing: border-box;
-  gap: 2em;
 }
+
 #trendChart {
-  width: 95vw; /* Make it almost full width */
-  max-width: 1500px; /* Prevent it from stretching too much */
-  height: 65vh; /* Set height to fit your screen */
-  max-height: 600px; /* Prevent excessive height */
+  width: 95vw;
+  max-width: 1500px;
+  height: 65vh;
+  max-height: 600px;
   box-shadow: var(--shadow-color-right-1) 5px 5px,
     var(--shadow-color-right-2) 10px 10px, var(--shadow-color-right-3) 15px 15px,
     var(--shadow-color-right-4) 20px 20px, var(--shadow-color-right-5) 25px 25px;
   transition: 300ms ease-in-out;
-}
-
-@media (max-width: 800px) {
-  #trendChart {
-    width: 100vw; /* Full width on smaller screens */
-    height: 60vh; /* Slightly smaller height for small screens */
-    max-height: 400px;
-  }
 }
 
 .chart-tooltip {
@@ -118,7 +127,6 @@ body {
   background: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 8px 12px;
-  box-sizing: border-box;
   border-radius: 5px;
   font-size: 1vw;
   pointer-events: none;
@@ -129,59 +137,298 @@ body {
 }
 
 #dynamic-legend {
+  margin-top: 1.5em;
+  padding: 0.75em 1.25em;
   width: 100%;
+  background-color: rgba(70, 130, 180, 0.08);
+  border-left: 6px solid #4682b4;
+  border-radius: 0.5em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  padding: 10px;
+  gap: 1.25em;
+  text-align: center;
+  color: #2c3e50;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.95vw;
+  user-select: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  padding: 0.4em 0.8em;
+  border-radius: 0.4em;
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.04);
+  font-size: 0.95vw;
+}
+
+.legend-item:hover {
+  background-color: #eef6fb;
+  transform: scale(1.03);
+}
+
+.legend-item div {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.legend-item strong {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.legend-item span {
+  font-weight: bold;
+  min-width: 40px;
+  color: #444;
+}
+
+#dynamic-legend {
+  margin-top: 2em;
+  padding: 1em 1.5em;
+  background-color: #f0f8ff;
+  border-left: 8px solid #0077b6;
+  border-radius: 0.5em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #003049;
   font-size: 1vw;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  background-color: #ffffff;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  font-size: 0.95em;
+  min-width: 200px;
+}
+
+.legend-box {
+  width: 16px;
+  height: 12px;
+  border-radius: 4px;
+  background-color: #999;
+  flex-shrink: 0;
+}
+
+.legend-item strong {
+  font-weight: 600;
+  color: #1a1a1a;
   white-space: nowrap;
 }
 
-.trend-chart-body .legend-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.trend-chart-body .legend-item strong {
-  flex-shrink: 0;
-  text-align: right;
-}
-
-.trend-chart-body .legend-item span {
-  display: inline-block;
-  min-width: 40px;
-  /* Ensures numbers have a consistent width */
-  text-align: left;
+.legend-value {
   font-weight: bold;
+  color: #444;
+  min-width: 40px;
+  text-align: left;
+}
+
+/* Stack layout for smaller screens */
+@media (max-width: 800px) {
+  #dynamic-legend {
+    flex-direction: column;
+    align-items: stretch;
+    font-size: 3.5vw;
+  }
+
+  .legend-item {
+    width: 100%;
+    justify-content: space-between;
+  }
 }
 
 .barChart-container {
   width: 100%;
-  height: auto;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4em;
+  padding: 0;
   box-sizing: border-box;
+  gap: 1em;
 }
+
 #barChart {
-  width: 95vw; /* Make it almost full width */
-  max-width: 1500px; /* Prevent it from stretching too much */
-  height: 100dvh; /* Set height to fit your screen */
+  width: 98vw;
+  max-width: 1600px;
+  height: 80vh;
+  max-height: 800px;
+  padding: 0;
+  border-radius: 0;
+  background-color: transparent;
   transition: 300ms ease-in-out;
 }
+
+/* Container spacing and full width */
+.barangay-table-section {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem 2rem;
+}
+
+#sortTable {
+  margin-bottom: 1.5em;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+/* Styled Table */
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  table-layout: auto;
+}
+
+/* Table Headers */
+.table-container th {
+  background: var(--accent-color);
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px 16px;
+  font-size: 1.1rem; /* Increased from 0.95rem */
+}
+
+/* Table Body */
+.table-container td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.05rem; /* Increased from 0.9rem */
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table-container td.cases {
+  color: #000;
+  font-weight: bold;
+  font-size: 0.95rem; /* default size */
+  transition: font-size 0.3s ease, color 0.3s ease;
+}
+
+.table-container td.cases.nonzero {
+  color: #ff7f00;
+  font-size: 1.2rem; /* bigger size for non-zero cases */
+}
+
+/* Hover Effect */
+.table-container tr:hover {
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+/* Optional: Column widths */
+.table-container th:nth-child(1),
+.table-container td:nth-child(1) {
+  width: 50%;
+}
+.table-container th:nth-child(2),
+.table-container td:nth-child(2) {
+  width: 50%;
+}
+
+#barangayTable tbody {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.totalCasesText {
+  margin-top: 2em;
+  padding: 1.2em 1.5em;
+  width: 100%;
+  box-sizing: border-box;
+
+  font-size: 1.2vw;
+  font-weight: 500;
+  color: #2c3e50;
+  background-color: rgba(70, 130, 180, 0.1);
+  border-left: 8px solid #4682b4;
+  border-radius: 0.5em;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  user-select: none;
+
+  margin-bottom: 2em;
+}
+
+.totalCasesText .case-number {
+  color: #ff7f00;
+  font-size: 2.5vw;
+  font-weight: 800;
+  margin-left: 0.4em;
+  display: inline-block;
+}
+
 @media (max-width: 800px) {
-  #barChart {
-    width: 100vw; /* Full width on smaller screens */
-    height: 60vh; /* Slightly smaller height for small screens */
-    max-height: 400px;
+  .totalCasesText {
+    font-size: 3.5vw;
+    padding: 1em;
+  }
+
+  .totalCasesText .case-number {
+    font-size: 6vw;
   }
 }
 
+/* ------------------ Responsive Fixes ------------------ */
+@media (max-width: 800px) {
+  .chart-main {
+    width: 100%;
+    height: calc(100vh - 60px);
+    padding: 0 10px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .chart-container {
+    width: 100%;
+    height: auto;
+    margin-bottom: 3em;
+    padding: 0;
+  }
+
+  .chart-container h2 {
+    font-size: 1.5rem;
+    padding: 8px;
+    font-weight: 600;
+  }
+
+  #trendChart {
+    width: 100vw;
+    height: 60vh;
+    max-height: 400px;
+  }
+
+  #barChart {
+    width: 100vw;
+    height: 60vh;
+    max-height: 400px;
+  }
+}

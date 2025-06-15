@@ -1,0 +1,181 @@
+/* Modal */
+.modal-content {
+  background: var(--base-color);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: min(30px, 7%);
+  z-index: 4;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 3;
+}
+
+.modal-card__header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.modal-card__header label {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.modal-card__header input {
+  width: 100%;
+  padding: 0.5em;
+  font-size: 1em;
+  border: 1px solid var(--text-color);
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+/* Modal Buttons */
+.modal-card__buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 1em;
+  margin-top: 3em;
+}
+
+.modal-card__buttons .btn-primary,
+.modal-card__buttons .btn-secondary {
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  font-size: 1vw;
+  color: white;
+}
+
+.modal-card__buttons .btn-primary {
+  background: var(--good-color);
+}
+
+.modal-card__buttons .btn-secondary {
+  background: var(--bad-color);
+}
+
+.modal-card__buttons button,
+.modal-card__buttons button span {
+  transition: 200ms;
+}
+
+.modal-card__buttons button .text {
+  font-weight: bold;
+}
+
+.modal-card__buttons button .icon {
+  position: absolute;
+  transform: translateX(95px);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-card__buttons .btn-primary .icon {
+  border-left: 1px solid #006e00;
+}
+
+.modal-card__buttons .btn-secondary .icon {
+  border-left: 1px solid #6e0000;
+}
+
+.modal-card__buttons button svg {
+  width: 20px;
+  fill: #eee;
+}
+
+.modal-card__buttons .btn-primary:hover {
+  background: #00a600;
+}
+
+.modal-card__buttons .btn-secondary:hover {
+  background: #a60000;
+}
+
+.modal-card__buttons button:hover .text {
+  color: transparent;
+}
+
+.modal-card__buttons button:hover .icon {
+  width: 150px;
+  border-left: none;
+  transform: translateX(0);
+}
+
+.modal-card__buttons button:focus {
+  outline: none;
+}
+
+.modal-card__buttons button:active .icon svg {
+  transform: scale(0.8);
+}
+
+/* Modal Header */
+.modal-header {
+  width: 100%;
+  font-size: 1.5em;
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: auto;
+}
+
+/* Forms */
+#addDataForm,
+.exportDataForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+  gap: 1em;
+}
+
+.exportDataForm label {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--text-color);
+  align-self: flex-start;
+}
+
+.exportDataForm select {
+  width: 100%;
+  padding: 0.5em;
+  font-size: 1em;
+  border: 1px solid var(--text-color);
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+/* Error Message */
+.modal-card p {
+  color: red;
+  margin-top: 10px;
+  font-size: 1.5em;
+  padding: 10px;
+  z-index: 5;
+}
