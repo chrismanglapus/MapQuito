@@ -54,6 +54,11 @@
   width: 100%;
   gap: 1em;
   margin-top: 3em;
+  position: sticky;
+  top: 0;
+  background: var(--base-color);
+  z-index: 10;
+  padding: 10px 0;
 }
 
 .modal-card__buttons .btn-primary,
@@ -179,3 +184,18 @@
   padding: 10px;
   z-index: 5;
 }
+
+#editPopulationModal .modal-content {
+  height: auto !important;
+  max-height: 90vh;
+  overflow: hidden;
+  align-items: flex-start;
+}
+
+.table-container th,
+.table-container td {
+  padding: 4px 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+

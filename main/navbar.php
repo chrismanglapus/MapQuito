@@ -67,6 +67,7 @@ include('phps/php__navbar.php')
                         <ul class="sub-menu">
                             <div>
                                 <li class="' . ($current_page == 'manage_data.php' ? 'active' : '') . '"><a href="manage_data.php">Manage Data</a></li>
+                                <li class="' . ($current_page == 'manage_barangay_population.php' ? 'active' : '') . '"><a href="manage_barangay_population.php">Manage Population</a></li>
                                 <li class="' . ($current_page == 'manage_accounts.php' ? 'active' : '') . '"><a href="manage_accounts.php">Manage Accounts</a></li>
                             </div>
                         </ul>
@@ -75,10 +76,21 @@ include('phps/php__navbar.php')
                 } elseif ($_SESSION['ADMIN_ROLE'] == 1) {
                     // Admin
                     echo $commonMenus . '
-                    <li class="' . ($current_page == 'manage_data.php' ? 'active' : '') . '"><a href="manage_data.php">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#c9c9c9"><path d="M720-200q33 0 56.5-23.5T800-280q0-33-23.5-56.5T720-360q-33 0-56.5 23.5T640-280q0 33 23.5 56.5T720-200Zm-8 120q-14 0-24.5-9T674-112l-6-28q-12-5-22.5-10.5T624-164l-29 9q-13 4-25.5-1T550-172l-8-14q-7-12-5-26t13-23l22-19q-2-12-2-26t2-26l-22-19q-11-9-13-22.5t5-25.5l9-15q7-11 19-16t25-1l29 9q11-8 21.5-13.5T668-420l6-29q3-14 13.5-22.5T712-480h16q14 0 24.5 9t13.5 23l6 28q12 5 22.5 10.5T816-396l29-9q13-4 25.5 1t19.5 16l8 14q7 12 5 26t-13 23l-22 19q2 12 2 26t-2 26l22 19q11 9 13 22.5t-5 25.5l-9 15q-7 11-19 16t-25 1l-29-9q-11 8-21.5 13.5T772-140l-6 29q-3 14-13.5 22.5T728-80h-16ZM160-240v-480 172-12 320Zm0 80q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h207q16 0 30.5 6t25.5 17l57 57h320q33 0 56.5 23.5T880-640v80q0 17-11.5 28.5T840-520q-17 0-28.5-11.5T800-560v-80H447l-80-80H160v480h280q17 0 28.5 11.5T480-200q0 17-11.5 28.5T440-160H160Z"/></svg>
-                        <span>Manage Data</span>
-                    </a></li>
+                    <li>
+                        <button onclick=toggleSubMenu(this) class="dropdown-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#c9c9c9"><path d="M200-400q-17 0-28.5-11.5T160-440q0-17 11.5-28.5T200-480h200q17 0 28.5 11.5T440-440q0 17-11.5 28.5T400-400H200Zm0-160q-17 0-28.5-11.5T160-600q0-17 11.5-28.5T200-640h360q17 0 28.5 11.5T600-600q0 17-11.5 28.5T560-560H200Zm0-160q-17 0-28.5-11.5T160-760q0-17 11.5-28.5T200-800h360q17 0 28.5 11.5T600-760q0 17-11.5 28.5T560-720H200Zm320 520v-66q0-8 3-15.5t9-13.5l209-208q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-380L655-172q-6 6-13.5 9t-15.5 3h-66q-17 0-28.5-11.5T520-200Zm300-223-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z"/></svg>
+                            <span>Manage</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#c9c9c9">
+                            <path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
+                            </svg>
+                        </button>
+                        <ul class="sub-menu">
+                            <div>
+                                <li class="' . ($current_page == 'manage_data.php' ? 'active' : '') . '"><a href="manage_data.php">Manage Data</a></li>
+                                <li class="' . ($current_page == 'manage_barangay_population.php' ? 'active' : '') . '"><a href="manage_barangay_population.php">Manage Population</a></li>
+                            </div>
+                        </ul>
+                    </li>
                     ';
                 }
             } else {
